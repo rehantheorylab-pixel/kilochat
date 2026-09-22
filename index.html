@@ -294,8 +294,8 @@
               </div>
               <!-- Provider Filter Pills -->
               <div id="providerFilters" class="flex gap-1 overflow-x-auto pb-1 text-[10px] scrollbar-none">
-                <button data-filter="all" class="filter-pill active px-2.5 py-1 rounded-full bg-brand-600 text-white font-medium flex-shrink-0">All (85)</button>
-                <button data-filter="fast" class="filter-pill px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 hover:text-white border border-emerald-500/30 flex-shrink-0 flex items-center gap-1 font-semibold"><i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i>⚡ Fast (&lt;2s)</button>
+                <button data-filter="fast" class="filter-pill active px-2.5 py-1 rounded-full bg-emerald-500 text-white font-semibold flex-shrink-0 flex items-center gap-1 shadow-sm"><i data-lucide="zap" class="w-3 h-3 text-white"></i>⚡ Fast (&lt;2s)</button>
+                <button data-filter="all" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">All (85)</button>
                 <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen</button>
                 <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
                 <button data-filter="anthropic" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Anthropic</button>
@@ -317,6 +317,12 @@
 
       <!-- Right: Connection Switcher & Quick Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
+        <!-- 3-Second Speed Guarantee Pill -->
+        <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>⚡ &lt;3s Guarantee</span>
+        </div>
+
         <!-- Live Connection Mode Indicator -->
         <button id="endpointSwitchBtn" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-xs text-slate-300 transition" title="Click to cycle Base URL (Public Tunnel / Localhost)">
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -1059,6 +1065,7 @@
               <span class="font-semibold text-slate-300 font-mono">${msg.model || state.selectedModel}</span>
               <span>•</span>
               <span>${msg.time || ''}</span>
+              <span class="latency-time-badge px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold ${msg.latency ? 'flex' : 'hidden'} items-center gap-0.5"><i data-lucide="zap" class="w-2.5 h-2.5 text-emerald-400"></i>${msg.latency || ''}</span>
             </div>
             <div class="p-4 rounded-2xl bg-surface-card border border-surface-border text-slate-200 prose-ai shadow-sm relative group">
               <div class="message-content">${renderMarkdown(msg.content)}</div>
@@ -1209,6 +1216,7 @@
       const cleanBase = sanitizeBaseUrl(state.baseUrl);
       const completionsUrl = cleanBase.endsWith('/v1') ? `${cleanBase}/chat/completions` : `${cleanBase}/v1/chat/completions`;
 
+      const reqStartTime = performance.now();
       try {
         const res = await fetch(completionsUrl, {
           method: 'POST',
@@ -1236,6 +1244,20 @@
         const msgRow = createMessageElement(assistantMsg, currentChat.messages.length - 1);
         elements.messagesList.appendChild(msgRow);
         const contentDiv = msgRow.querySelector('.message-content');
+        const latencyBadge = msgRow.querySelector('.latency-time-badge');
+
+        const markLatency = () => {
+          if (!assistantMsg.latency) {
+            const sec = ((performance.now() - reqStartTime) / 1000).toFixed(1);
+            assistantMsg.latency = `${sec}s`;
+            if (latencyBadge) {
+              latencyBadge.innerHTML = `<i data-lucide="zap" class="w-2.5 h-2.5 text-emerald-400"></i>${sec}s`;
+              latencyBadge.classList.remove('hidden');
+              latencyBadge.classList.add('flex');
+              lucide.createIcons();
+            }
+          }
+        };
 
         // Streaming handling
         if (state.streaming && res.body) {
@@ -1273,6 +1295,7 @@
                   const parsed = JSON.parse(dataStr);
                   const delta = parsed.choices?.[0]?.delta?.content || '';
                   if (delta) {
+                    markLatency();
                     assistantMsg.content += delta;
                     scheduleRender();
                   }
@@ -1281,11 +1304,13 @@
             }
           }
           // Final flush to guarantee full markdown formatting
+          markLatency();
           contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
           elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
           contentDiv.classList.remove('typing-cursor');
         } else {
           // Non-streaming response
+          markLatency();
           const jsonResp = await res.json();
           const reply = jsonResp.choices?.[0]?.message?.content || jsonResp.choices?.[0]?.text || JSON.stringify(jsonResp);
           assistantMsg.content = reply;
@@ -1577,8 +1602,8 @@
         switchChat(state.chats[0].id);
       }
 
-      // Initial catalog render
-      renderModelPicker();
+      // Initial catalog render (default to verified fast <2s models)
+      renderModelPicker('', 'fast');
       selectModel(state.selectedModel);
 
       // Fetch dynamic models in background
