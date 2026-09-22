@@ -274,14 +274,14 @@
         <!-- Model Picker Popover Trigger -->
         <div class="relative">
           <button id="modelDropdownBtn" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all text-xs font-medium">
-            <div id="selectedModelBadge" class="w-2.5 h-2.5 rounded-full bg-brand-500"></div>
-            <span id="selectedModelName" class="font-semibold text-slate-100 max-w-[140px] sm:max-w-[240px] truncate">Google Gemini 2.5 Flash</span>
-            <span id="modelProviderBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/20 font-mono hidden sm:inline">Google</span>
+            <div id="selectedModelBadge" class="w-2.5 h-2.5 rounded-full bg-pink-500"></div>
+            <span id="selectedModelName" class="font-semibold text-slate-100 max-w-[140px] sm:max-w-[240px] truncate">Qwen Coder 7B (⚡ Ultra Fast)</span>
+            <span id="modelProviderBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-pink-500/15 text-pink-300 border border-pink-500/20 font-mono hidden sm:inline">Qwen</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
           </button>
 
           <!-- Model Picker Popover Dropdown -->
-          <div id="modelPickerPopover" class="absolute left-0 top-full mt-2 w-80 sm:w-[420px] rounded-2xl bg-surface-sidebar border border-surface-border shadow-2xl shadow-black/90 backdrop-blur-2xl z-50 hidden flex flex-col max-h-[500px] overflow-hidden">
+          <div id="modelPickerPopover" class="absolute left-0 top-full mt-2 w-80 sm:w-[440px] rounded-2xl bg-surface-sidebar border border-surface-border shadow-2xl shadow-black/90 backdrop-blur-2xl z-50 hidden flex flex-col max-h-[500px] overflow-hidden">
             <!-- Search & Filter Header -->
             <div class="p-3 border-b border-surface-border flex flex-col gap-2 bg-surface-sidebar">
               <div class="flex items-center justify-between">
@@ -295,12 +295,13 @@
               <!-- Provider Filter Pills -->
               <div id="providerFilters" class="flex gap-1 overflow-x-auto pb-1 text-[10px] scrollbar-none">
                 <button data-filter="all" class="filter-pill active px-2.5 py-1 rounded-full bg-brand-600 text-white font-medium flex-shrink-0">All (85)</button>
+                <button data-filter="fast" class="filter-pill px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 hover:text-white border border-emerald-500/30 flex-shrink-0 flex items-center gap-1 font-semibold"><i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i>⚡ Fast (&lt;2s)</button>
+                <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen</button>
+                <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
                 <button data-filter="anthropic" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Anthropic</button>
                 <button data-filter="openai" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">OpenAI</button>
                 <button data-filter="deepseek" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">DeepSeek</button>
-                <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
                 <button data-filter="meta" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Meta</button>
-                <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen</button>
                 <button data-filter="moonshot" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Kimi</button>
                 <button data-filter="zhipu" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">GLM</button>
               </div>
@@ -496,9 +497,10 @@
           <input id="settingBaseUrl" type="text" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
           <!-- Quick Presets -->
           <div class="flex flex-wrap gap-1.5 pt-1">
+            <button data-url="https://animated-civil-perl-spam.trycloudflare.com/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 flex items-center gap-1 font-semibold">⚡ Cloudflare (5x Faster)</button>
             <button data-url="https://kilo-api-alhussainacademy.loca.lt/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Public Tunnel</button>
             <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Localhost (8000)</button>
-            <button id="detectTunnelBtn" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30">Auto-Detect Active Tunnel</button>
+            <button id="detectTunnelBtn" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30">Auto-Detect</button>
           </div>
         </div>
 
@@ -675,7 +677,7 @@
       maxTokens: parseInt(localStorage.getItem('kilo_max_tokens') || '4096'),
       streaming: localStorage.getItem('kilo_stream') !== 'false',
       systemPrompt: localStorage.getItem('kilo_sys_prompt') || '',
-      selectedModel: localStorage.getItem('kilo_selected_model') || 'gemini-flash',
+      selectedModel: (localStorage.getItem('kilo_selected_model') === 'gemini-flash' ? 'qwen-coder-7b' : (localStorage.getItem('kilo_selected_model') || 'qwen-coder-7b')),
       models: [...AINATIVE_OFFICIAL_MODELS],
       chats: JSON.parse(localStorage.getItem('kilo_chats') || '[]'),
       currentChatId: null,
@@ -881,6 +883,8 @@
                           (m.owned_by && m.owned_by.toLowerCase().includes(query));
         if (!textMatch) return false;
         if (providerFilter === 'all') return true;
+        const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b'];
+        if (providerFilter === 'fast') return FAST_MODELS.includes(m.id);
 
         const owner = (m.owned_by || '').toLowerCase();
         const id = m.id.toLowerCase();
@@ -900,12 +904,18 @@
         return;
       }
 
+      const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b'];
       filtered.forEach(m => {
         const meta = getProviderMeta(m.id, m.owned_by);
         const isSelected = m.id === state.selectedModel;
         const div = document.createElement('div');
         div.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition text-xs ${isSelected ? 'bg-brand-600/25 border border-brand-500/50 text-white shadow-sm' : 'hover:bg-surface-card border border-transparent text-slate-300'}`;
         
+        let speedBadge = '';
+        if (FAST_MODELS.includes(m.id)) {
+          speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-0.5 font-bold"><i data-lucide="zap" class="w-2.5 h-2.5 text-emerald-400"></i>&lt;2s</span>`;
+        }
+
         let contextBadge = '';
         if (m.context_window) {
           const k = Math.round(m.context_window / 1024);
@@ -924,6 +934,7 @@
             </div>
           </div>
           <div class="flex items-center gap-1.5 flex-shrink-0 ml-2">
+            ${speedBadge}
             ${contextBadge}
             <span class="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium" style="color: ${meta.color}; background: ${meta.bg}">${meta.name}</span>
           </div>
@@ -1233,6 +1244,18 @@
           let buffer = '';
           contentDiv.classList.add('typing-cursor');
 
+          let renderScheduled = false;
+          const scheduleRender = () => {
+            if (!renderScheduled) {
+              renderScheduled = true;
+              requestAnimationFrame(() => {
+                contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+                elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
+                renderScheduled = false;
+              });
+            }
+          };
+
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
@@ -1249,13 +1272,17 @@
                 try {
                   const parsed = JSON.parse(dataStr);
                   const delta = parsed.choices?.[0]?.delta?.content || '';
-                  assistantMsg.content += delta;
-                  contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
-                  elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
+                  if (delta) {
+                    assistantMsg.content += delta;
+                    scheduleRender();
+                  }
                 } catch (e) {}
               }
             }
           }
+          // Final flush to guarantee full markdown formatting
+          contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+          elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
           contentDiv.classList.remove('typing-cursor');
         } else {
           // Non-streaming response
