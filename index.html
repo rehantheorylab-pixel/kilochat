@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KiloChat — AINative Studio AI Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Marked for Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  <!-- Highlight.js for Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- KaTeX for Math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            surface: {
+              base: '#0a0d14',
+              sidebar: '#0e131f',
+              card: '#131929',
+              cardAlt: '#182035',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderHover: 'rgba(99, 102, 241, 0.35)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, rgba(10, 13, 20, 0) 70%);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0a0d14;
+      color: #f1f5f9;
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+    }
+    .light body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, rgba(248, 250, 252, 0) 70%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.22); }
+    .light ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.15); }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: rgba(14, 19, 31, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .light .glass-panel {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Message Prose Formatting */
+    .prose-ai {
+      color: #e2e8f0;
+      line-height: 1.75;
+      font-size: 0.965rem;
+    }
+    .light .prose-ai {
+      color: #1e293b;
+    }
+    .prose-ai p { margin-bottom: 0.85em; }
+    .prose-ai p:last-child { margin-bottom: 0; }
+    .prose-ai h1, .prose-ai h2, .prose-ai h3, .prose-ai h4 {
+      font-weight: 700;
+      color: #f8fafc;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+    }
+    .light .prose-ai h1, .light .prose-ai h2, .light .prose-ai h3 { color: #0f172a; }
+    .prose-ai h1 { font-size: 1.45rem; }
+    .prose-ai h2 { font-size: 1.25rem; }
+    .prose-ai h3 { font-size: 1.1rem; }
+    .prose-ai ul, .prose-ai ol { margin-left: 1.5rem; margin-bottom: 0.85em; }
+    .prose-ai ul { list-style-type: disc; }
+    .prose-ai ol { list-style-type: decimal; }
+    .prose-ai li { margin-bottom: 0.35em; }
+    .prose-ai blockquote {
+      border-left: 3px solid #6366f1;
+      padding-left: 1rem;
+      margin: 0.85em 0;
+      color: #94a3b8;
+      font-style: italic;
+    }
+    .prose-ai code:not(pre code) {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      padding: 0.2em 0.45em;
+      border-radius: 0.35rem;
+      font-size: 0.88em;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+    .light .prose-ai code:not(pre code) {
+      background: rgba(99, 102, 241, 0.08);
+      color: #4f46e5;
+      border-color: rgba(99, 102, 241, 0.15);
+    }
+    .prose-ai pre {
+      position: relative;
+      margin: 1em 0;
+      border-radius: 0.75rem;
+      background: #0f1422 !important;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      overflow: hidden;
+    }
+    .prose-ai table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+      font-size: 0.9em;
+    }
+    .prose-ai th, .prose-ai td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.55rem 0.85rem;
+      text-align: left;
+    }
+    .light .prose-ai th, .light .prose-ai td {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    .prose-ai th {
+      background: rgba(255, 255, 255, 0.04);
+      font-weight: 600;
+    }
+
+    /* Pulsing Cursor */
+    .typing-cursor::after {
+      content: '▋';
+      display: inline-block;
+      vertical-align: baseline;
+      margin-left: 2px;
+      color: #6366f1;
+      animation: blink 0.9s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Animated Gradients */
+    .logo-gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    }
+    .glow-accent {
+      box-shadow: 0 0 25px -4px rgba(99, 102, 241, 0.35);
+    }
+  </style>
+</head>
+<body class="flex h-screen w-screen overflow-hidden selection:bg-brand-600 selection:text-white">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="w-72 flex-shrink-0 bg-surface-sidebar border-r border-surface-border flex flex-col justify-between transition-all duration-300 select-none z-30 fixed inset-y-0 left-0 md:static -translate-x-full md:translate-x-0">
+    <!-- Sidebar Header -->
+    <div class="p-4 border-b border-surface-border flex flex-col gap-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl logo-gradient flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-base tracking-tight text-white">KiloChat</span>
+              <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">AINative</span>
+            </div>
+            <p class="text-[11px] text-slate-400">85+ Models • Public Gateway</p>
+          </div>
+        </div>
+        <button id="sidebarCloseBtn" class="md:hidden text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- New Chat Button -->
+      <button id="newChatBtn" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-medium text-sm shadow-md shadow-brand-600/20 transition-all active:scale-[0.98]">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>New Chat</span>
+        <span class="ml-auto text-[10px] bg-black/20 text-indigo-200 px-1.5 py-0.5 rounded font-mono hidden md:inline">Ctrl+K</span>
+      </button>
+
+      <!-- Search Chats -->
+      <div class="relative">
+        <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input id="chatSearchInput" type="text" placeholder="Search conversations..." class="w-full bg-surface-card border border-surface-border text-xs rounded-lg pl-8 pr-3 py-1.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500 transition-colors">
+      </div>
+    </div>
+
+    <!-- Chat History List -->
+    <div id="chatHistoryList" class="flex-1 overflow-y-auto p-3 space-y-1">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-3 border-t border-surface-border flex flex-col gap-2 bg-surface-sidebar/50">
+      <!-- Status Card -->
+      <div id="gatewayStatusWidget" class="p-2.5 rounded-xl bg-surface-card border border-surface-border text-xs flex flex-col gap-1.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span id="statusPulseDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="statusLabel" class="font-medium text-slate-200">85 Models Online</span>
+          </div>
+          <span id="keyCountBadge" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">AINative Active</span>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-slate-400">
+          <span class="truncate max-w-[150px]" id="tunnelUrlLabel">loca.lt tunnel</span>
+          <span id="latencyBadge" class="font-mono text-indigo-400">Live</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center justify-between pt-1 text-slate-400">
+        <button id="openSettingsBtn" class="flex items-center gap-1.5 hover:text-white px-2 py-1 rounded-lg hover:bg-surface-card transition text-xs">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+          <span>Settings</span>
+        </button>
+        <button id="clearAllChatsBtn" class="flex items-center gap-1 hover:text-rose-400 px-2 py-1 rounded-lg hover:bg-surface-card transition text-xs" title="Clear all history">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          <span>Clear</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Backdrop -->
+  <div id="sidebarBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 hidden md:hidden"></div>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
+
+    <!-- Top Navigation Bar -->
+    <header class="h-16 border-b border-surface-border glass-panel flex items-center justify-between px-4 z-10 flex-shrink-0">
+      <!-- Left: Mobile Menu & Model Selector Pill -->
+      <div class="flex items-center gap-3">
+        <button id="sidebarToggleBtn" class="md:hidden text-slate-300 hover:text-white p-2 rounded-lg hover:bg-surface-card">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Model Picker Popover Trigger -->
+        <div class="relative">
+          <button id="modelDropdownBtn" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all text-xs font-medium">
+            <div id="selectedModelBadge" class="w-2.5 h-2.5 rounded-full bg-brand-500"></div>
+            <span id="selectedModelName" class="font-semibold text-slate-100 max-w-[140px] sm:max-w-[240px] truncate">Google Gemini 2.5 Flash</span>
+            <span id="modelProviderBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/20 font-mono hidden sm:inline">Google</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+          </button>
+
+          <!-- Model Picker Popover Dropdown -->
+          <div id="modelPickerPopover" class="absolute left-0 top-full mt-2 w-80 sm:w-[420px] rounded-2xl bg-surface-sidebar border border-surface-border shadow-2xl shadow-black/90 backdrop-blur-2xl z-50 hidden flex flex-col max-h-[500px] overflow-hidden">
+            <!-- Search & Filter Header -->
+            <div class="p-3 border-b border-surface-border flex flex-col gap-2 bg-surface-sidebar">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-200">Select AI Model (AINative Catalog)</span>
+                <span id="modelCountLabel" class="text-[10px] text-slate-400 font-mono">85 available</span>
+              </div>
+              <div class="relative">
+                <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input id="modelSearchInput" type="text" placeholder="Search Claude, GPT, DeepSeek, Llama, Qwen, Kimi..." class="w-full bg-surface-card border border-surface-border text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500">
+              </div>
+              <!-- Provider Filter Pills -->
+              <div id="providerFilters" class="flex gap-1 overflow-x-auto pb-1 text-[10px] scrollbar-none">
+                <button data-filter="all" class="filter-pill active px-2.5 py-1 rounded-full bg-brand-600 text-white font-medium flex-shrink-0">All (85)</button>
+                <button data-filter="anthropic" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Anthropic</button>
+                <button data-filter="openai" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">OpenAI</button>
+                <button data-filter="deepseek" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">DeepSeek</button>
+                <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
+                <button data-filter="meta" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Meta</button>
+                <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen</button>
+                <button data-filter="moonshot" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Kimi</button>
+                <button data-filter="zhipu" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">GLM</button>
+              </div>
+            </div>
+
+            <!-- Model Options List -->
+            <div id="modelOptionsContainer" class="flex-1 overflow-y-auto p-2 space-y-1">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Connection Switcher & Quick Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Live Connection Mode Indicator -->
+        <button id="endpointSwitchBtn" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-xs text-slate-300 transition" title="Click to cycle Base URL (Public Tunnel / Localhost)">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="endpointModeLabel" class="font-mono text-[11px] text-slate-200 hidden sm:inline">Public Tunnel</span>
+          <i data-lucide="refresh-cw" class="w-3 h-3 text-slate-400"></i>
+        </button>
+
+        <!-- System Prompt Toggle Button -->
+        <button id="sysPromptBtn" class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-surface-card border border-transparent hover:border-surface-border transition text-xs" title="Custom System Prompt">
+          <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Light / Dark Toggle -->
+        <button id="themeToggleBtn" class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-surface-card border border-transparent hover:border-surface-border transition" title="Toggle Theme">
+          <i data-lucide="sun" class="w-4 h-4 dark-icon hidden"></i>
+          <i data-lucide="moon" class="w-4 h-4 light-icon"></i>
+        </button>
+
+        <!-- Settings Modal Trigger -->
+        <button id="headerSettingsBtn" class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-surface-card border border-transparent hover:border-surface-border transition" title="Open API Settings">
+          <i data-lucide="cog" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- System Prompt Drawer (Collapsible) -->
+    <div id="systemPromptDrawer" class="bg-surface-sidebar border-b border-surface-border p-4 hidden transition-all">
+      <div class="max-w-3xl mx-auto flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+            <i data-lucide="sliders" class="w-3.5 h-3.5 text-brand-400"></i>
+            System Persona & Instructions
+          </span>
+          <button id="closeSysPromptBtn" class="text-slate-400 hover:text-white text-xs">Close</button>
+        </div>
+        <textarea id="systemPromptTextarea" rows="2" placeholder="e.g. You are an expert AI assistant. Be concise, direct, helpful, and provide high-quality code and answers..." class="w-full bg-surface-card border border-surface-border text-xs rounded-xl p-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500"></textarea>
+      </div>
+    </div>
+
+    <!-- ==================== CHAT MESSAGES CANVAS ==================== -->
+    <div id="chatScrollArea" class="flex-1 overflow-y-auto px-4 py-6 scroll-smooth">
+      <div class="max-w-3xl mx-auto w-full flex flex-col min-h-full">
+
+        <!-- Empty Welcome State -->
+        <div id="emptyWelcomeState" class="flex-1 flex flex-col items-center justify-center text-center my-auto py-12 px-4 select-none">
+          <div class="w-16 h-16 rounded-3xl logo-gradient flex items-center justify-center text-white shadow-2xl shadow-indigo-500/30 mb-6 glow-accent">
+            <i data-lucide="sparkles" class="w-8 h-8"></i>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+            What can I assist you with today?
+          </h2>
+          <p class="text-slate-400 text-sm max-w-md mb-8">
+            Access 85+ models from Anthropic, OpenAI, DeepSeek, Google, Meta, and Alibaba via your high-speed AINative API Gateway.
+          </p>
+
+          <!-- Prompt Starter Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl text-left">
+            <button class="starter-prompt-card p-3.5 rounded-2xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all group flex flex-col gap-1 text-xs">
+              <div class="flex items-center gap-2 font-semibold text-slate-200 group-hover:text-brand-400 transition-colors">
+                <i data-lucide="message-square" class="w-4 h-4 text-brand-400"></i>
+                <span>Say Hello 👋</span>
+              </div>
+              <span class="text-slate-400 text-[11px]">Test gateway connectivity with a friendly greeting</span>
+            </button>
+
+            <button class="starter-prompt-card p-3.5 rounded-2xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all group flex flex-col gap-1 text-xs">
+              <div class="flex items-center gap-2 font-semibold text-slate-200 group-hover:text-indigo-400 transition-colors">
+                <i data-lucide="code-2" class="w-4 h-4 text-indigo-400"></i>
+                <span>Python FastAPI Proxy</span>
+              </div>
+              <span class="text-slate-400 text-[11px]">Write an async REST API with background tasks</span>
+            </button>
+
+            <button class="starter-prompt-card p-3.5 rounded-2xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all group flex flex-col gap-1 text-xs">
+              <div class="flex items-center gap-2 font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">
+                <i data-lucide="brain-circuit" class="w-4 h-4 text-cyan-400"></i>
+                <span>Quantum Computing</span>
+              </div>
+              <span class="text-slate-400 text-[11px]">Explain qubits and entanglement to a 10-year-old</span>
+            </button>
+
+            <button class="starter-prompt-card p-3.5 rounded-2xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border hover:border-brand-500/40 transition-all group flex flex-col gap-1 text-xs">
+              <div class="flex items-center gap-2 font-semibold text-slate-200 group-hover:text-pink-400 transition-colors">
+                <i data-lucide="bug" class="w-4 h-4 text-pink-400"></i>
+                <span>Debug Code</span>
+              </div>
+              <span class="text-slate-400 text-[11px]">Analyze performance and solve tricky bugs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div id="messagesList" class="flex flex-col space-y-6 flex-1 hidden">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Typing / Streaming Indicator Bubble -->
+        <div id="loadingBubble" class="hidden flex items-start gap-3 my-4">
+          <div class="w-8 h-8 rounded-xl logo-gradient flex items-center justify-center text-white text-xs font-bold shadow-md flex-shrink-0 animate-pulse">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="p-4 rounded-2xl bg-surface-card border border-surface-border text-xs text-slate-300 flex items-center gap-2.5">
+            <div class="flex space-x-1">
+              <span class="w-2 h-2 rounded-full bg-brand-400 animate-bounce" style="animation-delay: 0s"></span>
+              <span class="w-2 h-2 rounded-full bg-indigo-400 animate-bounce" style="animation-delay: 0.15s"></span>
+              <span class="w-2 h-2 rounded-full bg-pink-400 animate-bounce" style="animation-delay: 0.3s"></span>
+            </div>
+            <span id="loadingModelText" class="text-[11px] text-slate-400">Thinking...</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== FLOATING INPUT DOCK ==================== -->
+    <div class="p-4 bg-gradient-to-t from-surface-base via-surface-base to-transparent z-10 flex-shrink-0">
+      <div class="max-w-3xl mx-auto w-full">
+        <!-- Floating Prompt Card -->
+        <div class="rounded-2xl glass-panel border border-surface-border focus-within:border-brand-500/50 shadow-2xl shadow-black/60 p-3 transition-all">
+          <textarea id="promptInput" rows="1" placeholder="Message your AI model... (Enter to send, Shift+Enter for new line)" class="w-full bg-transparent border-0 resize-none text-sm text-slate-100 placeholder-slate-500 focus:ring-0 focus:outline-none max-h-48 overflow-y-auto leading-relaxed py-1"></textarea>
+
+          <!-- Input Footer Controls -->
+          <div class="flex items-center justify-between pt-2 mt-1 border-t border-surface-border/50 text-xs">
+            <div class="flex items-center gap-2 text-slate-400">
+              <span id="charCountLabel" class="text-[10px] font-mono hidden sm:inline">0 chars</span>
+              <span class="text-slate-600 hidden sm:inline">•</span>
+              <span id="activeModelFooterTag" class="text-[10px] font-mono text-indigo-400 truncate max-w-[160px]">gemini-flash</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="stopGenerationBtn" class="hidden px-2.5 py-1 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 border border-rose-500/30 text-xs flex items-center gap-1.5 transition">
+                <i data-lucide="square" class="w-3 h-3 fill-rose-300"></i>
+                <span>Stop</span>
+              </button>
+
+              <button id="sendBtn" class="w-8 h-8 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-40 disabled:hover:bg-brand-600 text-white flex items-center justify-center transition-all shadow-md shadow-brand-600/30 active:scale-95">
+                <i data-lucide="arrow-up" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy & Disclaimer Note -->
+        <p class="text-center text-[11px] text-slate-500 mt-2">
+          Connected via <span id="footerConnectionLabel" class="text-indigo-400 font-mono">Public Tunnel</span> • AI may make mistakes. Verify critical facts.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== SETTINGS MODAL ==================== -->
+  <div id="settingsModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg rounded-3xl bg-surface-sidebar border border-surface-border shadow-2xl shadow-black overflow-hidden flex flex-col">
+      <!-- Header -->
+      <div class="p-5 border-b border-surface-border flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-brand-600/20 text-brand-400 flex items-center justify-center border border-brand-500/30">
+            <i data-lucide="settings-2" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-slate-100">Gateway & Studio Settings</h3>
+            <p class="text-[11px] text-slate-400">Configure base URL, tokens, and model parameters</p>
+          </div>
+        </div>
+        <button id="closeSettingsModalBtn" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Settings Body -->
+      <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
+        <!-- Base URL -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-semibold text-slate-200 flex items-center justify-between">
+            <span>API Gateway Base URL</span>
+            <span class="text-[10px] text-slate-400">OpenAI compatible</span>
+          </label>
+          <input id="settingBaseUrl" type="text" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
+          <!-- Quick Presets -->
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <button data-url="https://kilo-api-alhussainacademy.loca.lt/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Public Tunnel</button>
+            <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Localhost (8000)</button>
+            <button id="detectTunnelBtn" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30">Auto-Detect Active Tunnel</button>
+          </div>
+        </div>
+
+        <!-- API Key -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-semibold text-slate-200 flex items-center justify-between">
+            <span>Authorization Bearer Token</span>
+            <span class="text-[10px] text-slate-400">Any dummy key is accepted</span>
+          </label>
+          <input id="settingApiKey" type="text" value="dummy-key" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
+        </div>
+
+        <!-- Localtunnel Bypass Header Switch -->
+        <div class="flex items-center justify-between p-3 rounded-xl bg-surface-card border border-surface-border">
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-slate-200">Send Bypass-Tunnel-Reminder</span>
+            <span class="text-[10px] text-slate-400">Bypasses localtunnel.me landing screen</span>
+          </div>
+          <input id="settingBypassHeader" type="checkbox" checked class="w-4 h-4 rounded text-brand-600 focus:ring-0 bg-surface-cardAlt border-surface-border">
+        </div>
+
+        <!-- Parameters: Temperature & Max Tokens -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-200 flex items-center justify-between">
+              <span>Temperature</span>
+              <span id="tempValueLabel" class="text-[10px] font-mono text-brand-400">0.7</span>
+            </label>
+            <input id="settingTemp" type="range" min="0" max="1" step="0.05" value="0.7" class="w-full accent-brand-500">
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-200 flex items-center justify-between">
+              <span>Max Tokens</span>
+              <span id="maxTokensValueLabel" class="text-[10px] font-mono text-brand-400">4096</span>
+            </label>
+            <input id="settingMaxTokens" type="range" min="256" max="16384" step="256" value="4096" class="w-full accent-brand-500">
+          </div>
+        </div>
+
+        <!-- Stream Mode Switch -->
+        <div class="flex items-center justify-between p-3 rounded-xl bg-surface-card border border-surface-border">
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-slate-200">Stream Responses</span>
+            <span class="text-[10px] text-slate-400">Real-time word-by-word streaming</span>
+          </div>
+          <input id="settingStream" type="checkbox" checked class="w-4 h-4 rounded text-brand-600 focus:ring-0 bg-surface-cardAlt border-surface-border">
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-surface-border flex items-center justify-between bg-surface-sidebar">
+        <button id="testConnectionBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-xs text-slate-200 transition">
+          <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Test Ping</span>
+        </button>
+        <button id="saveSettingsBtn" class="px-4 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-md shadow-brand-600/30 transition">
+          Save Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LOGIC JAVASCRIPT ==================== -->
+  <script>
+    // --- OFFICIAL AINATIVE STUDIO 85+ MODEL CATALOG ---
+    const AINATIVE_OFFICIAL_MODELS = [
+      // Top Popular Models
+      { id: "gemini-flash", display_name: "Google Gemini 2.5 Flash", owned_by: "google", context_window: 1048576 },
+      { id: "claude-3-sonnet", display_name: "Claude 3.5 Sonnet", owned_by: "anthropic", context_window: 200000 },
+      { id: "claude-sonnet-4-5", display_name: "Claude Sonnet 4.5", owned_by: "anthropic", context_window: 200000 },
+      { id: "claude-sonnet-4.6", display_name: "Claude Sonnet 4.6", owned_by: "anthropic", context_window: 200000 },
+      { id: "claude-opus-4", display_name: "Claude Opus 4", owned_by: "anthropic", context_window: 200000 },
+      { id: "claude-opus-4-5", display_name: "Claude Opus 4.5", owned_by: "anthropic", context_window: 200000 },
+      { id: "claude-opus-4-6", display_name: "Claude Opus 4.6", owned_by: "anthropic", context_window: 200000 },
+      { id: "gpt-4o", display_name: "GPT-4o", owned_by: "openai", context_window: 128000 },
+      { id: "gpt-4o-mini", display_name: "GPT-4o Mini", owned_by: "openai", context_window: 128000 },
+      { id: "o1", display_name: "OpenAI o1", owned_by: "openai", context_window: 128000 },
+      { id: "o3", display_name: "OpenAI o3", owned_by: "openai", context_window: 128000 },
+      { id: "gpt-5", display_name: "GPT-5", owned_by: "openai", context_window: 128000 },
+      { id: "gpt-5-mini", display_name: "GPT-5 Mini", owned_by: "openai", context_window: 128000 },
+      { id: "gpt-5-3-codex", display_name: "GPT-5.3 Codex", owned_by: "openai", context_window: 131072 },
+      { id: "gpt-oss-120b", display_name: "GPT-OSS 120B", owned_by: "digitalocean", context_window: 65536 },
+      { id: "gpt-oss-20b", display_name: "GPT-OSS 20B", owned_by: "digitalocean", context_window: 65536 },
+
+      // DeepSeek Lineage
+      { id: "deepseek-r1", display_name: "DeepSeek R1 (Thinking)", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-v3", display_name: "DeepSeek V3", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-3-2", display_name: "DeepSeek 3.2", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-3.2", display_name: "DeepSeek 3.2 (Fast)", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-4-flash", display_name: "DeepSeek 4 Flash", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-v4-flash", display_name: "DeepSeek V4 Flash", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-v4-pro", display_name: "DeepSeek V4 Pro", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-r1-distill-llama-70b", display_name: "DeepSeek R1 Distill Llama 70B", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-r1-distill-llama-8b", display_name: "DeepSeek R1 Distill Llama 8B", owned_by: "nvidia", context_window: 131072 },
+      { id: "deepseek-r1-distill-qwen-7b", display_name: "DeepSeek R1 Distill Qwen 7B", owned_by: "nvidia", context_window: 131072 },
+      { id: "deepseek-v3-2", display_name: "DeepSeek V3.2", owned_by: "nvidia", context_window: 131072 },
+
+      // Meta Llama Family
+      { id: "llama-3-1-8b", display_name: "Llama 3.1 8B", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3.1-8b", display_name: "Llama 3.1 8B (API)", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3-2-11b-vision", display_name: "Llama 3.2 11B Vision", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3.2-11b-vision", display_name: "Llama 3.2 11B Vision (API)", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3-2-90b-vision", display_name: "Llama 3.2 90B Vision", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3.2-90b-vision", display_name: "Llama 3.2 90B Vision (API)", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3-3-70b-instruct", display_name: "Llama 3.3 70B Instruct", owned_by: "meta", context_window: 131072 },
+      { id: "llama-3-3-70b", display_name: "Llama 3.3 70B Base", owned_by: "meta", context_window: 131072 },
+      { id: "llama-4-maverick-17b-128e", display_name: "Llama 4 Maverick (128e)", owned_by: "meta", context_window: 524288 },
+      { id: "llama-4-maverick", display_name: "Llama 4 Maverick", owned_by: "meta", context_window: 524288 },
+      { id: "llama-4-maverick-17b", display_name: "Llama-4-Maverick-17B", owned_by: "meta", context_window: 524288 },
+      { id: "llama-4-scout", display_name: "Llama 4 Scout (524k Context)", owned_by: "meta", context_window: 524288 },
+
+      // Alibaba Qwen Series
+      { id: "qwen3-5-72b-instruct", display_name: "Qwen3.5 72B Instruct", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3.5-72b-instruct", display_name: "Qwen3.5 72B (API)", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-5-397b-a22b-instruct", display_name: "Qwen3.5 397B MoE", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3.5-397b-a22b-instruct", display_name: "Qwen3.5 397B MoE (API)", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-5-397b", display_name: "Qwen3.5 397B Base", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-14b", display_name: "Qwen3 14B", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-32b", display_name: "Qwen3 32B", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-8b", display_name: "Qwen3 8B", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen3-coder-30b-a3b", display_name: "Qwen3 Coder 30B (262k)", owned_by: "alibaba", context_window: 262144 },
+      { id: "qwen3-coder-next", display_name: "Qwen3 Coder Next 80B", owned_by: "alibaba", context_window: 262144 },
+      { id: "qwen-coder-32b", display_name: "Qwen Coder 32B", owned_by: "alibaba", context_window: 131072 },
+      { id: "qwen-coder-7b", display_name: "Qwen Coder 7B", owned_by: "alibaba", context_window: 131072 },
+
+      // Moonshot Kimi
+      { id: "kimi-k2", display_name: "Kimi K2", owned_by: "moonshot", context_window: 131072 },
+      { id: "kimi-k2-5", display_name: "Kimi K2.5", owned_by: "moonshot", context_window: 131072 },
+      { id: "kimi-k2-6", display_name: "Kimi K2.6", owned_by: "moonshot", context_window: 131072 },
+      { id: "kimi-k2.6", display_name: "Kimi K2.6 (API)", owned_by: "moonshot", context_window: 131072 },
+      { id: "kimi-k2-thinking", display_name: "Kimi K2 Thinking", owned_by: "moonshot", context_window: 131072 },
+      { id: "kimi-k3", display_name: "Kimi K3 (262k)", owned_by: "moonshot", context_window: 262144 },
+
+      // Zhipu GLM
+      { id: "glm-4-7", display_name: "GLM 4.7", owned_by: "cerebras", context_window: 131072 },
+      { id: "zai-glm-4-7", display_name: "GLM 4.7 (Cerebras)", owned_by: "cerebras", context_window: 131072 },
+      { id: "glm-5-1", display_name: "GLM-5.1", owned_by: "zhipu", context_window: 131072 },
+      { id: "glm-5-2", display_name: "GLM-5.2", owned_by: "zhipu", context_window: 131072 },
+      { id: "glm-5.2", display_name: "GLM-5.2 (API)", owned_by: "zhipu", context_window: 131072 },
+      { id: "glm-5-3", display_name: "GLM-5.3 (1M Tokens)", owned_by: "zhipu", context_window: 1048576 },
+      { id: "glm-5.3", display_name: "GLM-5.3 (API)", owned_by: "zhipu", context_window: 1048576 },
+
+      // MiniMax & Xiaomi
+      { id: "minimax-m2-5", display_name: "MiniMax M2.5", owned_by: "minimax", context_window: 131072 },
+      { id: "minimax-m2.5", display_name: "MiniMax M2.5 (API)", owned_by: "minimax", context_window: 131072 },
+      { id: "minimax-m2-7", display_name: "MiniMax M2.7", owned_by: "minimax", context_window: 131072 },
+      { id: "mimo-v2-5-pro", display_name: "MiMo v2.5 Pro", owned_by: "xiaomi", context_window: 131072 },
+      { id: "mimo-v2.5-pro", display_name: "MiMo v2.5 Pro (API)", owned_by: "xiaomi", context_window: 131072 },
+
+      // Mistral & Nvidia
+      { id: "mistral-3-14b", display_name: "Mistral 3 14B", owned_by: "mistral", context_window: 131072 },
+      { id: "mistral-large", display_name: "Mistral Large 3", owned_by: "mistral", context_window: 131072 },
+      { id: "mistral-medium", display_name: "Mistral Medium", owned_by: "mistral", context_window: 131072 },
+      { id: "nemotron-3-super-120b", display_name: "Nemotron 3 Super 120B", owned_by: "nvidia", context_window: 131072 },
+      { id: "nemotron-3-ultra-550b", display_name: "Nemotron 3 Ultra 550B", owned_by: "nvidia", context_window: 131072 },
+      { id: "nemotron-nano-12b-v2-vl", display_name: "Nemotron Nano 12B VL", owned_by: "nvidia", context_window: 131072 },
+
+      // Google Gemma & Microsoft Phi
+      { id: "gemma-3-12b", display_name: "Gemma 3 12B", owned_by: "google", context_window: 131072 },
+      { id: "gemma-3-27b", display_name: "Gemma 3 27B", owned_by: "google", context_window: 131072 },
+      { id: "gemma-4-31b", display_name: "Gemma 4 31B", owned_by: "google", context_window: 65536 },
+      { id: "phi-4", display_name: "Phi-4", owned_by: "microsoft", context_window: 131072 },
+      { id: "cohere-command", display_name: "Cohere Command A", owned_by: "cohere", context_window: 131072 },
+      { id: "arcee-trinity-large-thinking", display_name: "Arcee Trinity Large Thinking", owned_by: "digitalocean", context_window: 131072 }
+    ];
+
+    // --- Application State ---
+    const DEFAULT_TUNNEL_URL = 'https://kilo-api-alhussainacademy.loca.lt/v1';
+    const state = {
+      baseUrl: localStorage.getItem('kilo_base_url') || (window.location.origin.includes('8000') ? window.location.origin + '/v1' : DEFAULT_TUNNEL_URL),
+      apiKey: localStorage.getItem('kilo_api_key') || 'dummy-key',
+      bypassHeader: localStorage.getItem('kilo_bypass_header') !== 'false',
+      temperature: parseFloat(localStorage.getItem('kilo_temp') || '0.7'),
+      maxTokens: parseInt(localStorage.getItem('kilo_max_tokens') || '4096'),
+      streaming: localStorage.getItem('kilo_stream') !== 'false',
+      systemPrompt: localStorage.getItem('kilo_sys_prompt') || '',
+      selectedModel: localStorage.getItem('kilo_selected_model') || 'gemini-flash',
+      models: [...AINATIVE_OFFICIAL_MODELS],
+      chats: JSON.parse(localStorage.getItem('kilo_chats') || '[]'),
+      currentChatId: null,
+      isGenerating: false,
+      abortController: null,
+    };
+
+    // DOM Elements
+    const elements = {
+      sidebar: document.getElementById('sidebar'),
+      sidebarToggleBtn: document.getElementById('sidebarToggleBtn'),
+      sidebarCloseBtn: document.getElementById('sidebarCloseBtn'),
+      sidebarBackdrop: document.getElementById('sidebarBackdrop'),
+      newChatBtn: document.getElementById('newChatBtn'),
+      chatSearchInput: document.getElementById('chatSearchInput'),
+      chatHistoryList: document.getElementById('chatHistoryList'),
+      modelDropdownBtn: document.getElementById('modelDropdownBtn'),
+      modelPickerPopover: document.getElementById('modelPickerPopover'),
+      selectedModelName: document.getElementById('selectedModelName'),
+      selectedModelBadge: document.getElementById('selectedModelBadge'),
+      modelProviderBadge: document.getElementById('modelProviderBadge'),
+      modelOptionsContainer: document.getElementById('modelOptionsContainer'),
+      modelSearchInput: document.getElementById('modelSearchInput'),
+      modelCountLabel: document.getElementById('modelCountLabel'),
+      providerFilters: document.getElementById('providerFilters'),
+      endpointSwitchBtn: document.getElementById('endpointSwitchBtn'),
+      endpointModeLabel: document.getElementById('endpointModeLabel'),
+      statusPulseDot: document.getElementById('statusPulseDot'),
+      statusLabel: document.getElementById('statusLabel'),
+      keyCountBadge: document.getElementById('keyCountBadge'),
+      latencyBadge: document.getElementById('latencyBadge'),
+      tunnelUrlLabel: document.getElementById('tunnelUrlLabel'),
+      themeToggleBtn: document.getElementById('themeToggleBtn'),
+      sysPromptBtn: document.getElementById('sysPromptBtn'),
+      systemPromptDrawer: document.getElementById('systemPromptDrawer'),
+      systemPromptTextarea: document.getElementById('systemPromptTextarea'),
+      closeSysPromptBtn: document.getElementById('closeSysPromptBtn'),
+      chatScrollArea: document.getElementById('chatScrollArea'),
+      emptyWelcomeState: document.getElementById('emptyWelcomeState'),
+      messagesList: document.getElementById('messagesList'),
+      loadingBubble: document.getElementById('loadingBubble'),
+      loadingModelText: document.getElementById('loadingModelText'),
+      promptInput: document.getElementById('promptInput'),
+      sendBtn: document.getElementById('sendBtn'),
+      stopGenerationBtn: document.getElementById('stopGenerationBtn'),
+      charCountLabel: document.getElementById('charCountLabel'),
+      activeModelFooterTag: document.getElementById('activeModelFooterTag'),
+      footerConnectionLabel: document.getElementById('footerConnectionLabel'),
+      settingsModal: document.getElementById('settingsModal'),
+      openSettingsBtn: document.getElementById('openSettingsBtn'),
+      headerSettingsBtn: document.getElementById('headerSettingsBtn'),
+      closeSettingsModalBtn: document.getElementById('closeSettingsModalBtn'),
+      saveSettingsBtn: document.getElementById('saveSettingsBtn'),
+      testConnectionBtn: document.getElementById('testConnectionBtn'),
+      settingBaseUrl: document.getElementById('settingBaseUrl'),
+      settingApiKey: document.getElementById('settingApiKey'),
+      settingBypassHeader: document.getElementById('settingBypassHeader'),
+      settingTemp: document.getElementById('settingTemp'),
+      tempValueLabel: document.getElementById('tempValueLabel'),
+      settingMaxTokens: document.getElementById('settingMaxTokens'),
+      maxTokensValueLabel: document.getElementById('maxTokensValueLabel'),
+      settingStream: document.getElementById('settingStream'),
+      clearAllChatsBtn: document.getElementById('clearAllChatsBtn'),
+      detectTunnelBtn: document.getElementById('detectTunnelBtn'),
+    };
+
+    // --- Helpers ---
+    function getHeaders() {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${state.apiKey}`
+      };
+      if (state.bypassHeader) {
+        headers['Bypass-Tunnel-Reminder'] = 'true';
+      }
+      return headers;
+    }
+
+    function formatTime(isoStr) {
+      const d = new Date(isoStr);
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function sanitizeBaseUrl(url) {
+      return url.trim().replace(/\/+$/, '');
+    }
+
+    // --- Provider Colors & Badges ---
+    function getProviderMeta(modelId, ownedBy) {
+      const id = (modelId || '').toLowerCase();
+      const owner = (ownedBy || '').toLowerCase();
+      if (id.includes('claude') || owner.includes('anthropic')) {
+        return { name: 'Anthropic', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)' };
+      }
+      if (id.includes('gpt') || id.includes('o1') || id.includes('o3') || owner.includes('openai')) {
+        return { name: 'OpenAI', color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)' };
+      }
+      if (id.includes('gemini') || id.includes('gemma') || owner.includes('google')) {
+        return { name: 'Google', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)' };
+      }
+      if (id.includes('deepseek')) {
+        return { name: 'DeepSeek', color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.15)' };
+      }
+      if (id.includes('llama') || owner.includes('meta')) {
+        return { name: 'Meta', color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)' };
+      }
+      if (id.includes('qwen') || owner.includes('alibaba')) {
+        return { name: 'Qwen', color: '#ec4899', bg: 'rgba(236, 72, 153, 0.15)' };
+      }
+      if (id.includes('kimi') || owner.includes('moonshot')) {
+        return { name: 'Kimi', color: '#a855f7', bg: 'rgba(168, 85, 247, 0.15)' };
+      }
+      if (id.includes('glm') || owner.includes('zhipu') || owner.includes('cerebras')) {
+        return { name: 'GLM', color: '#6366f1', bg: 'rgba(99, 102, 241, 0.15)' };
+      }
+      if (id.includes('mistral') || owner.includes('mistral')) {
+        return { name: 'Mistral', color: '#f97316', bg: 'rgba(249, 115, 22, 0.15)' };
+      }
+      return { name: owner || 'AINative', color: '#64748b', bg: 'rgba(100, 116, 139, 0.15)' };
+    }
+
+    // --- Fetch Models ---
+    async function fetchAvailableModels() {
+      const t0 = performance.now();
+      elements.selectedModelName.textContent = 'Connecting...';
+      try {
+        const cleanBase = sanitizeBaseUrl(state.baseUrl);
+        const modelsUrl = cleanBase.endsWith('/v1') ? `${cleanBase}/models` : `${cleanBase}/v1/models`;
+
+        const res = await fetch(modelsUrl, {
+          headers: getHeaders(),
+          cache: 'no-cache'
+        });
+
+        const t1 = performance.now();
+        const latency = Math.round(t1 - t0);
+        elements.latencyBadge.textContent = `${latency} ms`;
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+
+        if (list.length > 0) {
+          // Merge with official catalog
+          const map = new Map();
+          AINATIVE_OFFICIAL_MODELS.forEach(m => map.set(m.id, m));
+          list.forEach(m => map.set(m.id, { ...map.get(m.id), ...m }));
+          state.models = Array.from(map.values());
+          elements.modelCountLabel.textContent = `${state.models.length} available`;
+          updateStatus(true, `${state.models.length} Models Online`, latency);
+        } else {
+          state.models = [...AINATIVE_OFFICIAL_MODELS];
+        }
+      } catch (err) {
+        console.warn('Network model fetch warning (using embedded catalog):', err);
+        state.models = [...AINATIVE_OFFICIAL_MODELS];
+        elements.modelCountLabel.textContent = `${state.models.length} available`;
+        updateStatus(true, `${state.models.length} Models Ready`, 0);
+      }
+
+      renderModelPicker();
+      selectModel(state.selectedModel);
+    }
+
+    function updateStatus(online, label, latency) {
+      if (online) {
+        elements.statusPulseDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+        elements.statusLabel.textContent = label || 'Gateway Online';
+        elements.latencyBadge.textContent = latency ? `${latency} ms` : 'Live';
+      } else {
+        elements.statusPulseDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+        elements.statusLabel.textContent = label || 'Offline';
+        elements.latencyBadge.textContent = 'Err';
+      }
+    }
+
+    function selectModel(modelId) {
+      state.selectedModel = modelId;
+      localStorage.setItem('kilo_selected_model', modelId);
+      const modelObj = state.models.find(m => m.id === modelId) || { id: modelId };
+      const meta = getProviderMeta(modelObj.id, modelObj.owned_by);
+
+      elements.selectedModelName.textContent = modelObj.display_name || modelObj.id;
+      elements.selectedModelBadge.style.backgroundColor = meta.color;
+      elements.modelProviderBadge.textContent = meta.name;
+      elements.modelProviderBadge.style.color = meta.color;
+      elements.modelProviderBadge.style.backgroundColor = meta.bg;
+      elements.activeModelFooterTag.textContent = modelObj.id;
+
+      // Close popover
+      elements.modelPickerPopover.classList.add('hidden');
+    }
+
+    function renderModelPicker(filterText = '', providerFilter = 'all') {
+      const container = elements.modelOptionsContainer;
+      container.innerHTML = '';
+
+      let filtered = state.models.filter(m => {
+        const query = filterText.toLowerCase();
+        const textMatch = !filterText || 
+                          m.id.toLowerCase().includes(query) || 
+                          (m.display_name && m.display_name.toLowerCase().includes(query)) ||
+                          (m.owned_by && m.owned_by.toLowerCase().includes(query));
+        if (!textMatch) return false;
+        if (providerFilter === 'all') return true;
+
+        const owner = (m.owned_by || '').toLowerCase();
+        const id = m.id.toLowerCase();
+        if (providerFilter === 'anthropic') return id.includes('claude') || owner.includes('anthropic');
+        if (providerFilter === 'openai') return id.includes('gpt') || id.includes('o1') || id.includes('o3') || owner.includes('openai');
+        if (providerFilter === 'deepseek') return id.includes('deepseek') || owner.includes('deepseek');
+        if (providerFilter === 'google') return id.includes('gemini') || id.includes('gemma') || owner.includes('google');
+        if (providerFilter === 'meta') return id.includes('llama') || owner.includes('meta');
+        if (providerFilter === 'alibaba') return id.includes('qwen') || owner.includes('alibaba');
+        if (providerFilter === 'moonshot') return id.includes('kimi') || owner.includes('moonshot');
+        if (providerFilter === 'zhipu') return id.includes('glm') || owner.includes('zhipu') || owner.includes('cerebras');
+        return owner.includes(providerFilter);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs">No models match "${escapeHtml(filterText)}".</div>`;
+        return;
+      }
+
+      filtered.forEach(m => {
+        const meta = getProviderMeta(m.id, m.owned_by);
+        const isSelected = m.id === state.selectedModel;
+        const div = document.createElement('div');
+        div.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition text-xs ${isSelected ? 'bg-brand-600/25 border border-brand-500/50 text-white shadow-sm' : 'hover:bg-surface-card border border-transparent text-slate-300'}`;
+        
+        let contextBadge = '';
+        if (m.context_window) {
+          const k = Math.round(m.context_window / 1024);
+          contextBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-slate-400 border border-white/5">${k >= 1000 ? '1M' : k + 'k'} ctx</span>`;
+        }
+
+        div.innerHTML = `
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background-color: ${meta.color}"></span>
+            <div class="truncate">
+              <div class="font-medium text-slate-200 truncate flex items-center gap-1.5">
+                <span>${m.display_name || m.id}</span>
+                ${isSelected ? '<i data-lucide="check" class="w-3 h-3 text-brand-400 inline"></i>' : ''}
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono truncate">${m.id}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0 ml-2">
+            ${contextBadge}
+            <span class="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium" style="color: ${meta.color}; background: ${meta.bg}">${meta.name}</span>
+          </div>
+        `;
+
+        div.onclick = () => selectModel(m.id);
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    // --- Chat Session Management ---
+    function createNewChat() {
+      const chat = {
+        id: 'chat_' + Date.now(),
+        title: 'New Conversation',
+        createdAt: new Date().toISOString(),
+        messages: []
+      };
+      state.chats.unshift(chat);
+      saveChats();
+      switchChat(chat.id);
+      if (window.innerWidth < 768) closeSidebar();
+    }
+
+    function switchChat(chatId) {
+      state.currentChatId = chatId;
+      const chat = state.chats.find(c => c.id === chatId);
+      renderChatHistoryList();
+      renderMessages(chat ? chat.messages : []);
+      elements.promptInput.focus();
+    }
+
+    function saveChats() {
+      localStorage.setItem('kilo_chats', JSON.stringify(state.chats));
+    }
+
+    function deleteChat(chatId, event) {
+      event.stopPropagation();
+      state.chats = state.chats.filter(c => c.id !== chatId);
+      saveChats();
+      if (state.currentChatId === chatId) {
+        if (state.chats.length > 0) {
+          switchChat(state.chats[0].id);
+        } else {
+          createNewChat();
+        }
+      } else {
+        renderChatHistoryList();
+      }
+    }
+
+    function renderChatHistoryList(searchFilter = '') {
+      const list = elements.chatHistoryList;
+      list.innerHTML = '';
+
+      const filtered = state.chats.filter(c => !searchFilter || c.title.toLowerCase().includes(searchFilter.toLowerCase()));
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="p-3 text-center text-slate-500 text-xs">No conversations found.</div>`;
+        return;
+      }
+
+      filtered.forEach(chat => {
+        const isActive = chat.id === state.currentChatId;
+        const item = document.createElement('div');
+        item.className = `group flex items-center justify-between p-2 rounded-xl cursor-pointer text-xs transition ${isActive ? 'bg-surface-card border border-surface-border text-white font-medium' : 'text-slate-400 hover:text-slate-200 hover:bg-surface-card/60'}`;
+        item.onclick = () => switchChat(chat.id);
+
+        item.innerHTML = `
+          <div class="flex items-center gap-2 truncate flex-1 min-w-0 mr-2">
+            <i data-lucide="message-square" class="w-3.5 h-3.5 flex-shrink-0 text-slate-500 ${isActive ? 'text-brand-400' : ''}"></i>
+            <span class="truncate">${chat.title}</span>
+          </div>
+          <button class="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-400 p-1 rounded transition flex-shrink-0" title="Delete chat">
+            <i data-lucide="trash" class="w-3 h-3"></i>
+          </button>
+        `;
+
+        item.querySelector('button').onclick = (e) => deleteChat(chat.id, e);
+        list.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    function renderMessages(messages) {
+      const container = elements.messagesList;
+      container.innerHTML = '';
+
+      if (!messages || messages.length === 0) {
+        elements.emptyWelcomeState.classList.remove('hidden');
+        container.classList.add('hidden');
+        return;
+      }
+
+      elements.emptyWelcomeState.classList.add('hidden');
+      container.classList.remove('hidden');
+
+      messages.forEach((msg, idx) => {
+        const row = createMessageElement(msg, idx);
+        container.appendChild(row);
+      });
+
+      elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
+      lucide.createIcons();
+    }
+
+    function createMessageElement(msg, idx) {
+      const isUser = msg.role === 'user';
+      const div = document.createElement('div');
+      div.className = `flex items-start gap-3.5 ${isUser ? 'justify-end' : 'justify-start'}`;
+
+      if (!isUser) {
+        // AI Avatar
+        const meta = getProviderMeta(msg.model || state.selectedModel);
+        div.innerHTML = `
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center text-white text-xs font-bold shadow-md flex-shrink-0" style="background: ${meta.color}">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <div class="flex flex-col gap-1 max-w-[85%] sm:max-w-[78%]">
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 ml-1">
+              <span class="font-semibold text-slate-300 font-mono">${msg.model || state.selectedModel}</span>
+              <span>•</span>
+              <span>${msg.time || ''}</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-surface-card border border-surface-border text-slate-200 prose-ai shadow-sm relative group">
+              <div class="message-content">${renderMarkdown(msg.content)}</div>
+              <!-- Action Bar -->
+              <div class="mt-2.5 pt-2 border-t border-surface-border/50 flex items-center justify-between text-[11px] text-slate-400 opacity-80 group-hover:opacity-100 transition">
+                <button class="copy-msg-btn hover:text-white flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i>
+                  <span>Copy</span>
+                </button>
+                <span class="text-[10px] font-mono text-slate-500">${msg.content.length} chars</span>
+              </div>
+            </div>
+          </div>
+        `;
+        div.querySelector('.copy-msg-btn').onclick = () => copyToClipboard(msg.content, div.querySelector('.copy-msg-btn span'));
+      } else {
+        // User Message
+        div.innerHTML = `
+          <div class="flex flex-col items-end gap-1 max-w-[85%] sm:max-w-[75%]">
+            <div class="p-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white text-sm shadow-md leading-relaxed whitespace-pre-wrap select-text">
+              ${escapeHtml(msg.content)}
+            </div>
+            <span class="text-[10px] text-slate-400 mr-1 font-mono">${msg.time || ''}</span>
+          </div>
+          <div class="w-8 h-8 rounded-xl bg-surface-card border border-surface-border flex items-center justify-center text-slate-200 flex-shrink-0">
+            <i data-lucide="user" class="w-4 h-4"></i>
+          </div>
+        `;
+      }
+      return div;
+    }
+
+    function renderMarkdown(rawText) {
+      if (!rawText) return '';
+      // Configure marked
+      marked.setOptions({
+        highlight: function(code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+        breaks: true,
+        gfm: true
+      });
+
+      let html = marked.parse(rawText);
+
+      // Enhance pre code blocks with custom header and copy button
+      html = html.replace(/<pre><code class="([^"]*)">([\s\S]*?)<\/code><\/pre>/gi, (match, cls, code) => {
+        const langMatch = cls.match(/language-(\w+)/);
+        const lang = langMatch ? langMatch[1] : 'code';
+        return `
+          <div class="code-block-wrapper my-3 rounded-xl overflow-hidden border border-surface-border bg-[#0d121f]">
+            <div class="flex items-center justify-between px-3.5 py-1.5 bg-surface-card border-b border-surface-border text-xs text-slate-400 select-none">
+              <span class="font-mono text-[11px] font-semibold text-brand-300 uppercase">${lang}</span>
+              <button onclick="copyCodeBlock(this)" class="hover:text-white flex items-center gap-1 text-[11px] transition">
+                <i data-lucide="copy" class="w-3 h-3"></i>
+                <span>Copy</span>
+              </button>
+            </div>
+            <pre class="p-3.5 overflow-x-auto text-xs font-mono leading-relaxed"><code class="${cls}">${code}</code></pre>
+          </div>
+        `;
+      });
+
+      return html;
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function copyToClipboard(text, labelElement) {
+      navigator.clipboard.writeText(text).then(() => {
+        if (labelElement) {
+          const original = labelElement.textContent;
+          labelElement.textContent = 'Copied!';
+          setTimeout(() => labelElement.textContent = original, 1800);
+        }
+      });
+    }
+
+    window.copyCodeBlock = function(btn) {
+      const codeElement = btn.closest('.code-block-wrapper').querySelector('pre code');
+      if (codeElement) {
+        copyToClipboard(codeElement.innerText, btn.querySelector('span'));
+      }
+    };
+
+    // --- Sending Messages & Streaming ---
+    async function sendMessage() {
+      const prompt = elements.promptInput.value.trim();
+      if (!prompt || state.isGenerating) return;
+
+      if (!state.currentChatId) createNewChat();
+      const currentChat = state.chats.find(c => c.id === state.currentChatId);
+
+      // Auto update title if first message
+      if (currentChat.messages.length === 0) {
+        currentChat.title = prompt.slice(0, 32) + (prompt.length > 32 ? '...' : '');
+        renderChatHistoryList();
+      }
+
+      // Add user message
+      const timeStr = formatTime(new Date().toISOString());
+      currentChat.messages.push({
+        role: 'user',
+        content: prompt,
+        time: timeStr
+      });
+
+      elements.promptInput.value = '';
+      elements.promptInput.style.height = 'auto';
+      updateCharCount();
+      renderMessages(currentChat.messages);
+
+      // Prepare AI response container
+      state.isGenerating = true;
+      elements.sendBtn.disabled = true;
+      elements.stopGenerationBtn.classList.remove('hidden');
+      elements.loadingBubble.classList.remove('hidden');
+      elements.loadingModelText.textContent = `Routing to ${state.selectedModel}...`;
+
+      state.abortController = new AbortController();
+
+      const messagesPayload = [];
+      if (state.systemPrompt.trim()) {
+        messagesPayload.push({ role: 'system', content: state.systemPrompt.trim() });
+      }
+      currentChat.messages.forEach(m => {
+        messagesPayload.push({ role: m.role, content: m.content });
+      });
+
+      const requestBody = {
+        model: state.selectedModel,
+        messages: messagesPayload,
+        temperature: state.temperature,
+        max_tokens: state.maxTokens,
+        stream: state.streaming
+      };
+
+      const cleanBase = sanitizeBaseUrl(state.baseUrl);
+      const completionsUrl = cleanBase.endsWith('/v1') ? `${cleanBase}/chat/completions` : `${cleanBase}/v1/chat/completions`;
+
+      try {
+        const res = await fetch(completionsUrl, {
+          method: 'POST',
+          headers: getHeaders(),
+          body: JSON.stringify(requestBody),
+          signal: state.abortController.signal
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+          throw new Error(errData.detail || errData.error || `Server responded with ${res.status}`);
+        }
+
+        elements.loadingBubble.classList.add('hidden');
+
+        // Append assistant message in UI
+        const assistantMsg = {
+          role: 'assistant',
+          content: '',
+          model: state.selectedModel,
+          time: formatTime(new Date().toISOString())
+        };
+        currentChat.messages.push(assistantMsg);
+
+        const msgRow = createMessageElement(assistantMsg, currentChat.messages.length - 1);
+        elements.messagesList.appendChild(msgRow);
+        const contentDiv = msgRow.querySelector('.message-content');
+
+        // Streaming handling
+        if (state.streaming && res.body) {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder('utf-8');
+          let buffer = '';
+          contentDiv.classList.add('typing-cursor');
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // Keep unfinished line
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (trimmed.startsWith('data:')) {
+                const dataStr = trimmed.slice(5).trim();
+                if (dataStr === '[DONE]') continue;
+                try {
+                  const parsed = JSON.parse(dataStr);
+                  const delta = parsed.choices?.[0]?.delta?.content || '';
+                  assistantMsg.content += delta;
+                  contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+                  elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
+                } catch (e) {}
+              }
+            }
+          }
+          contentDiv.classList.remove('typing-cursor');
+        } else {
+          // Non-streaming response
+          const jsonResp = await res.json();
+          const reply = jsonResp.choices?.[0]?.message?.content || jsonResp.choices?.[0]?.text || JSON.stringify(jsonResp);
+          assistantMsg.content = reply;
+          contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+        }
+
+        lucide.createIcons();
+        saveChats();
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.log('Stream stopped by user.');
+        } else {
+          console.error('Chat error:', err);
+          currentChat.messages.push({
+            role: 'assistant',
+            content: `⚠️ **Connection Error**: ${err.message}\n\n*Check that your gateway is online and that your Base URL is pointing to your active tunnel (${state.baseUrl}).*`,
+            model: state.selectedModel,
+            time: formatTime(new Date().toISOString())
+          });
+          renderMessages(currentChat.messages);
+        }
+      } finally {
+        state.isGenerating = false;
+        state.abortController = null;
+        elements.sendBtn.disabled = false;
+        elements.stopGenerationBtn.classList.add('hidden');
+        elements.loadingBubble.classList.add('hidden');
+        elements.promptInput.focus();
+        saveChats();
+      }
+    }
+
+    function stopGeneration() {
+      if (state.abortController) {
+        state.abortController.abort();
+      }
+    }
+
+    // --- Tunnel & Mode Switcher ---
+    function cycleEndpointMode() {
+      if (state.baseUrl.includes('loca.lt')) {
+        state.baseUrl = 'http://localhost:8000/v1';
+        elements.endpointModeLabel.textContent = 'Localhost (8000)';
+      } else {
+        state.baseUrl = DEFAULT_TUNNEL_URL;
+        elements.endpointModeLabel.textContent = 'Public Tunnel';
+      }
+      localStorage.setItem('kilo_base_url', state.baseUrl);
+      elements.settingBaseUrl.value = state.baseUrl;
+      elements.footerConnectionLabel.textContent = state.baseUrl;
+      fetchAvailableModels();
+    }
+
+    async function detectActiveTunnel() {
+      try {
+        const res = await fetch('http://localhost:8000/api/system/status');
+        const st = await res.json();
+        if (st.public_url) {
+          state.baseUrl = `${st.public_url}/v1`;
+          elements.settingBaseUrl.value = state.baseUrl;
+          localStorage.setItem('kilo_base_url', state.baseUrl);
+          elements.footerConnectionLabel.textContent = state.baseUrl;
+          alert(`Detected active public tunnel: ${st.public_url}`);
+          fetchAvailableModels();
+        }
+      } catch (e) {
+        alert('Could not query local gateway status on port 8000.');
+      }
+    }
+
+    function updateCharCount() {
+      const len = elements.promptInput.value.length;
+      elements.charCountLabel.textContent = `${len} chars`;
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('kilo_theme', isDark ? 'dark' : 'light');
+    }
+
+    function openSidebar() {
+      elements.sidebar.classList.remove('-translate-x-full');
+      elements.sidebarBackdrop.classList.remove('hidden');
+    }
+
+    function closeSidebar() {
+      elements.sidebar.classList.add('-translate-x-full');
+      elements.sidebarBackdrop.classList.add('hidden');
+    }
+
+    // --- Event Listeners Initialization ---
+    function initListeners() {
+      // Sidebar
+      elements.sidebarToggleBtn.onclick = openSidebar;
+      elements.sidebarCloseBtn.onclick = closeSidebar;
+      elements.sidebarBackdrop.onclick = closeSidebar;
+      elements.newChatBtn.onclick = createNewChat;
+
+      // Search chats
+      elements.chatSearchInput.oninput = (e) => renderChatHistoryList(e.target.value);
+
+      // Model Popover
+      elements.modelDropdownBtn.onclick = (e) => {
+        e.stopPropagation();
+        elements.modelPickerPopover.classList.toggle('hidden');
+        if (!elements.modelPickerPopover.classList.contains('hidden')) {
+          elements.modelSearchInput.focus();
+        }
+      };
+      document.addEventListener('click', (e) => {
+        if (!elements.modelDropdownBtn.contains(e.target) && !elements.modelPickerPopover.contains(e.target)) {
+          elements.modelPickerPopover.classList.add('hidden');
+        }
+      });
+      elements.modelSearchInput.oninput = (e) => {
+        const activeFilter = elements.providerFilters.querySelector('.active')?.dataset?.filter || 'all';
+        renderModelPicker(e.target.value, activeFilter);
+      };
+
+      // Provider filter pills
+      elements.providerFilters.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.onclick = () => {
+          elements.providerFilters.querySelectorAll('.filter-pill').forEach(b => {
+            b.classList.remove('active', 'bg-brand-600', 'text-white');
+            b.classList.add('bg-surface-card', 'text-slate-300');
+          });
+          btn.classList.add('active', 'bg-brand-600', 'text-white');
+          btn.classList.remove('bg-surface-card', 'text-slate-300');
+          renderModelPicker(elements.modelSearchInput.value, btn.dataset.filter);
+        };
+      });
+
+      // Send & Stop
+      elements.sendBtn.onclick = sendMessage;
+      elements.stopGenerationBtn.onclick = stopGeneration;
+
+      // Auto-grow textarea & keyboard submit
+      elements.promptInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 180) + 'px';
+        updateCharCount();
+      });
+
+      elements.promptInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      // Quick starter prompts
+      document.querySelectorAll('.starter-prompt-card').forEach(card => {
+        card.onclick = () => {
+          const text = card.querySelector('div span').textContent;
+          if (text.includes('Say Hello')) {
+            elements.promptInput.value = 'Hi! Please introduce yourself and what model you are.';
+          } else if (text.includes('Python FastAPI')) {
+            elements.promptInput.value = 'Write a modern Python FastAPI endpoint with async request forwarding, Pydantic v2 schemas, and health checks.';
+          } else if (text.includes('Quantum Computing')) {
+            elements.promptInput.value = 'Explain how quantum computing works, qubits, and superposition in simple and intuitive terms.';
+          } else if (text.includes('Debug Code')) {
+            elements.promptInput.value = 'Can you provide a step-by-step troubleshooting checklist for debugging high latency and 504 gateway timeouts on an API proxy?';
+          }
+          elements.promptInput.style.height = 'auto';
+          elements.promptInput.style.height = Math.min(elements.promptInput.scrollHeight, 180) + 'px';
+          updateCharCount();
+          sendMessage();
+        };
+      });
+
+      // System Prompt Drawer
+      elements.sysPromptBtn.onclick = () => elements.systemPromptDrawer.classList.toggle('hidden');
+      elements.closeSysPromptBtn.onclick = () => elements.systemPromptDrawer.classList.add('hidden');
+      elements.systemPromptTextarea.value = state.systemPrompt;
+      elements.systemPromptTextarea.oninput = (e) => {
+        state.systemPrompt = e.target.value;
+        localStorage.setItem('kilo_sys_prompt', state.systemPrompt);
+      };
+
+      // Theme toggle
+      elements.themeToggleBtn.onclick = toggleTheme;
+
+      // Endpoint quick switcher
+      elements.endpointSwitchBtn.onclick = cycleEndpointMode;
+
+      // Settings Modal
+      const openSettings = () => {
+        elements.settingBaseUrl.value = state.baseUrl;
+        elements.settingApiKey.value = state.apiKey;
+        elements.settingBypassHeader.checked = state.bypassHeader;
+        elements.settingTemp.value = state.temperature;
+        elements.tempValueLabel.textContent = state.temperature;
+        elements.settingMaxTokens.value = state.maxTokens;
+        elements.maxTokensValueLabel.textContent = state.maxTokens;
+        elements.settingStream.checked = state.streaming;
+        elements.settingsModal.classList.remove('hidden');
+      };
+      elements.openSettingsBtn.onclick = openSettings;
+      elements.headerSettingsBtn.onclick = openSettings;
+      elements.closeSettingsModalBtn.onclick = () => elements.settingsModal.classList.add('hidden');
+
+      elements.settingTemp.oninput = (e) => elements.tempValueLabel.textContent = e.target.value;
+      elements.settingMaxTokens.oninput = (e) => elements.maxTokensValueLabel.textContent = e.target.value;
+
+      document.querySelectorAll('.preset-url-btn').forEach(btn => {
+        btn.onclick = () => elements.settingBaseUrl.value = btn.dataset.url;
+      });
+
+      elements.detectTunnelBtn.onclick = detectActiveTunnel;
+
+      elements.saveSettingsBtn.onclick = () => {
+        state.baseUrl = sanitizeBaseUrl(elements.settingBaseUrl.value);
+        state.apiKey = elements.settingApiKey.value.trim();
+        state.bypassHeader = elements.settingBypassHeader.checked;
+        state.temperature = parseFloat(elements.settingTemp.value);
+        state.maxTokens = parseInt(elements.settingMaxTokens.value);
+        state.streaming = elements.settingStream.checked;
+
+        localStorage.setItem('kilo_base_url', state.baseUrl);
+        localStorage.setItem('kilo_api_key', state.apiKey);
+        localStorage.setItem('kilo_bypass_header', state.bypassHeader);
+        localStorage.setItem('kilo_temp', state.temperature);
+        localStorage.setItem('kilo_max_tokens', state.maxTokens);
+        localStorage.setItem('kilo_stream', state.streaming);
+
+        elements.footerConnectionLabel.textContent = state.baseUrl;
+        elements.settingsModal.classList.add('hidden');
+        fetchAvailableModels();
+      };
+
+      elements.testConnectionBtn.onclick = async () => {
+        const btn = elements.testConnectionBtn;
+        btn.disabled = true;
+        btn.innerHTML = `<i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i><span>Pinging...</span>`;
+        lucide.createIcons();
+        try {
+          const t0 = performance.now();
+          const clean = sanitizeBaseUrl(elements.settingBaseUrl.value);
+          const u = clean.endsWith('/v1') ? `${clean}/models` : `${clean}/v1/models`;
+          const r = await fetch(u, { headers: getHeaders() });
+          const t1 = performance.now();
+          if (r.ok) {
+            btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i><span>${Math.round(t1-t0)}ms OK</span>`;
+          } else {
+            btn.innerHTML = `<i data-lucide="alert-circle" class="w-3.5 h-3.5 text-rose-400"></i><span>HTTP ${r.status}</span>`;
+          }
+        } catch(e) {
+          btn.innerHTML = `<i data-lucide="x" class="w-3.5 h-3.5 text-rose-400"></i><span>Failed</span>`;
+        }
+        lucide.createIcons();
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i><span>Test Ping</span>`;
+          lucide.createIcons();
+        }, 2500);
+      };
+
+      elements.clearAllChatsBtn.onclick = () => {
+        if (confirm('Clear all conversation history?')) {
+          state.chats = [];
+          saveChats();
+          createNewChat();
+        }
+      };
+
+      // Keyboard Shortcut Ctrl+K for new chat
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          createNewChat();
+        }
+      });
+    }
+
+    // --- Startup Lifecycle ---
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initListeners();
+
+      // Set initial labels
+      elements.footerConnectionLabel.textContent = state.baseUrl;
+      elements.endpointModeLabel.textContent = state.baseUrl.includes('loca.lt') ? 'Public Tunnel' : 'Localhost (8000)';
+
+      // Load initial chat
+      if (state.chats.length === 0) {
+        createNewChat();
+      } else {
+        switchChat(state.chats[0].id);
+      }
+
+      // Initial catalog render
+      renderModelPicker();
+      selectModel(state.selectedModel);
+
+      // Fetch dynamic models in background
+      fetchAvailableModels();
+
+      // Auto-detect active tunnel if available
+      fetch('http://localhost:8000/api/system/status')
+        .then(r => r.json())
+        .then(st => {
+          if (st.key_count) {
+            elements.keyCountBadge.textContent = `${st.key_count} Keys`;
+          }
+          if (st.public_url) {
+            elements.tunnelUrlLabel.textContent = st.public_url.replace('https://', '');
+            if (state.baseUrl.includes('loca.lt') && state.baseUrl !== `${st.public_url}/v1`) {
+              state.baseUrl = `${st.public_url}/v1`;
+              localStorage.setItem('kilo_base_url', state.baseUrl);
+              elements.footerConnectionLabel.textContent = state.baseUrl;
+              elements.settingBaseUrl.value = state.baseUrl;
+            }
+          }
+        })
+        .catch(() => {});
+    });
+  </script>
+</body>
+</html>
