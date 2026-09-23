@@ -918,8 +918,11 @@
         div.className = `p-2.5 rounded-xl cursor-pointer flex items-center justify-between transition text-xs ${isSelected ? 'bg-brand-600/25 border border-brand-500/50 text-white shadow-sm' : 'hover:bg-surface-card border border-transparent text-slate-300'}`;
         
         let speedBadge = '';
+        const SLOW_HEAVY_MODELS = ['qwen3-5-72b-instruct', 'qwen3.5-72b-instruct', 'qwen3-5-397b', 'deepseek-v3', 'deepseek-r1', 'llama-3.3-70b', 'llama-3.2-90b-vision', 'claude-opus-4', 'claude-opus-4-5'];
         if (FAST_MODELS.includes(m.id)) {
           speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-0.5 font-bold"><i data-lucide="zap" class="w-2.5 h-2.5 text-emerald-400"></i>&lt;2s</span>`;
+        } else if (SLOW_HEAVY_MODELS.includes(m.id)) {
+          speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">Heavy (>8s)</span>`;
         }
 
         let contextBadge = '';
@@ -1305,6 +1308,9 @@
           }
           // Final flush to guarantee full markdown formatting
           markLatency();
+          if (!assistantMsg.content || !assistantMsg.content.trim()) {
+            assistantMsg.content = `⚠️ **Upstream Model Timeout**: The server for \`${state.selectedModel}\` did not return any tokens before closing the connection.\n\n*Heavy models (70B/72B) like \`${state.selectedModel}\` are currently congested or timing out upstream on AINative Studio.*\n\n👉 **Recommended Solution**: Switch to **Qwen Coder 7B** or **Gemma 3 12B** from the **⚡ Fast (<2s)** tab for instant streaming responses.`;
+          }
           contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
           elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
           contentDiv.classList.remove('typing-cursor');
