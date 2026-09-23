@@ -1291,15 +1291,26 @@
 
             for (const line of lines) {
               const trimmed = line.trim();
+              if (!trimmed) continue;
               if (trimmed.startsWith('data:')) {
                 const dataStr = trimmed.slice(5).trim();
                 if (dataStr === '[DONE]') continue;
                 try {
                   const parsed = JSON.parse(dataStr);
-                  const delta = parsed.choices?.[0]?.delta?.content || '';
+                  const delta = parsed.choices?.[0]?.delta?.content || parsed.choices?.[0]?.message?.content || '';
                   if (delta) {
                     markLatency();
                     assistantMsg.content += delta;
+                    scheduleRender();
+                  }
+                } catch (e) {}
+              } else if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+                try {
+                  const parsed = JSON.parse(trimmed);
+                  const text = parsed.choices?.[0]?.message?.content || parsed.choices?.[0]?.delta?.content || '';
+                  if (text) {
+                    markLatency();
+                    assistantMsg.content = text;
                     scheduleRender();
                   }
                 } catch (e) {}
@@ -1309,7 +1320,7 @@
           // Final flush to guarantee full markdown formatting
           markLatency();
           if (!assistantMsg.content || !assistantMsg.content.trim()) {
-            assistantMsg.content = `⚠️ **Upstream Model Timeout**: The server for \`${state.selectedModel}\` did not return any tokens before closing the connection.\n\n*Heavy models (70B/72B) like \`${state.selectedModel}\` are currently congested or timing out upstream on AINative Studio.*\n\n👉 **Recommended Solution**: Switch to **Qwen Coder 7B** or **Gemma 3 12B** from the **⚡ Fast (<2s)** tab for instant streaming responses.`;
+            assistantMsg.content = `⚠️ **Upstream Stalled**: The server for \`${state.selectedModel}\` did not return any tokens before closing the connection.\n\n*If you are using Localtunnel, it may have dropped the socket. Switching to **Cloudflare Tunnel** in Settings provides 100% stable connection.*`;
           }
           contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
           elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
@@ -1332,7 +1343,7 @@
           console.error('Chat error:', err);
           currentChat.messages.push({
             role: 'assistant',
-            content: `⚠️ **Connection Error**: ${err.message}\n\n*Check that your gateway is online and that your Base URL is pointing to your active tunnel (${state.baseUrl}).*`,
+            content: `⚠️ **Connection Error**: ${err.message}\n\n*Check that your gateway is online and that your Base URL is pointing to your active tunnel (${state.baseUrl}). If Localtunnel dropped, switch to the Cloudflare Tunnel in Settings.*`,
             model: state.selectedModel,
             time: formatTime(new Date().toISOString())
           });
