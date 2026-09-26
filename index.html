@@ -592,6 +592,9 @@
       { id: "gpt-oss-20b", display_name: "GPT-OSS 20B", owned_by: "digitalocean", context_window: 65536 },
 
       // DeepSeek Lineage
+      { id: "deepseek-chat", display_name: "DeepSeek Chat (Web/V3)", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-reasoner", display_name: "DeepSeek Reasoner (Web/R1)", owned_by: "deepseek", context_window: 131072 },
+      { id: "deepseek-expert", display_name: "DeepSeek Expert", owned_by: "deepseek", context_window: 131072 },
       { id: "deepseek-r1", display_name: "DeepSeek R1 (Thinking)", owned_by: "deepseek", context_window: 131072 },
       { id: "deepseek-v3", display_name: "DeepSeek V3", owned_by: "deepseek", context_window: 131072 },
       { id: "deepseek-3-2", display_name: "DeepSeek 3.2", owned_by: "deepseek", context_window: 131072 },
@@ -675,15 +678,19 @@
 
     // --- Application State ---
     const DEFAULT_TUNNEL_URL = 'https://kilo-api-alhussainacademy.loca.lt/v1';
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    const defaultBase = isGitHubPages
+      ? DEFAULT_TUNNEL_URL
+      : (window.location.protocol.startsWith('http') ? `${window.location.origin}/v1` : 'http://localhost:8000/v1');
     const state = {
-      baseUrl: localStorage.getItem('kilo_base_url') || (window.location.origin.includes('8000') ? window.location.origin + '/v1' : DEFAULT_TUNNEL_URL),
+      baseUrl: localStorage.getItem('kilo_base_url') || defaultBase,
       apiKey: localStorage.getItem('kilo_api_key') || 'dummy-key',
       bypassHeader: localStorage.getItem('kilo_bypass_header') !== 'false',
       temperature: parseFloat(localStorage.getItem('kilo_temp') || '0.7'),
       maxTokens: parseInt(localStorage.getItem('kilo_max_tokens') || '4096'),
       streaming: localStorage.getItem('kilo_stream') !== 'false',
       systemPrompt: localStorage.getItem('kilo_sys_prompt') || '',
-      selectedModel: (localStorage.getItem('kilo_selected_model') === 'gemini-flash' ? 'qwen-coder-7b' : (localStorage.getItem('kilo_selected_model') || 'qwen-coder-7b')),
+      selectedModel: localStorage.getItem('kilo_selected_model') || 'gemini-flash',
       models: [...AINATIVE_OFFICIAL_MODELS],
       chats: JSON.parse(localStorage.getItem('kilo_chats') || '[]'),
       currentChatId: null,
@@ -889,7 +896,7 @@
                           (m.owned_by && m.owned_by.toLowerCase().includes(query));
         if (!textMatch) return false;
         if (providerFilter === 'all') return true;
-        const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b'];
+        const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b', 'deepseek-chat', 'deepseek-v4-pro'];
         if (providerFilter === 'fast') return FAST_MODELS.includes(m.id);
 
         const owner = (m.owned_by || '').toLowerCase();
@@ -910,7 +917,7 @@
         return;
       }
 
-      const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b'];
+      const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b', 'deepseek-chat', 'deepseek-v4-pro'];
       filtered.forEach(m => {
         const meta = getProviderMeta(m.id, m.owned_by);
         const isSelected = m.id === state.selectedModel;
@@ -1367,13 +1374,23 @@
     }
 
     // --- Tunnel & Mode Switcher ---
-    function cycleEndpointMode() {
-      if (state.baseUrl.includes('loca.lt')) {
+    async function cycleEndpointMode() {
+      let activePublic = null;
+      try {
+        const queryUrl = window.location.protocol.startsWith('http') 
+          ? `${window.location.origin}/api/system/status` 
+          : 'http://localhost:8000/api/system/status';
+        const res = await fetch(queryUrl);
+        const st = await res.json();
+        if (st.public_url) activePublic = st.public_url;
+      } catch (e) {}
+
+      if (state.baseUrl.includes('localhost') || state.baseUrl.includes('127.0.0.1')) {
+        state.baseUrl = activePublic ? `${activePublic}/v1` : DEFAULT_TUNNEL_URL;
+        elements.endpointModeLabel.textContent = (state.baseUrl.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
+      } else {
         state.baseUrl = 'http://localhost:8000/v1';
         elements.endpointModeLabel.textContent = 'Localhost (8000)';
-      } else {
-        state.baseUrl = DEFAULT_TUNNEL_URL;
-        elements.endpointModeLabel.textContent = 'Public Tunnel';
       }
       localStorage.setItem('kilo_base_url', state.baseUrl);
       elements.settingBaseUrl.value = state.baseUrl;
@@ -1383,18 +1400,22 @@
 
     async function detectActiveTunnel() {
       try {
-        const res = await fetch('http://localhost:8000/api/system/status');
+        const queryUrl = window.location.protocol.startsWith('http') 
+          ? `${window.location.origin}/api/system/status` 
+          : 'http://localhost:8000/api/system/status';
+        const res = await fetch(queryUrl);
         const st = await res.json();
         if (st.public_url) {
           state.baseUrl = `${st.public_url}/v1`;
           elements.settingBaseUrl.value = state.baseUrl;
           localStorage.setItem('kilo_base_url', state.baseUrl);
           elements.footerConnectionLabel.textContent = state.baseUrl;
+          elements.endpointModeLabel.textContent = (st.public_url.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
           alert(`Detected active public tunnel: ${st.public_url}`);
           fetchAvailableModels();
         }
       } catch (e) {
-        alert('Could not query local gateway status on port 8000.');
+        alert('Could not query gateway status on port 8000.');
       }
     }
 
@@ -1610,7 +1631,7 @@
 
       // Set initial labels
       elements.footerConnectionLabel.textContent = state.baseUrl;
-      elements.endpointModeLabel.textContent = state.baseUrl.includes('loca.lt') ? 'Public Tunnel' : 'Localhost (8000)';
+      elements.endpointModeLabel.textContent = (state.baseUrl.includes('localhost') || state.baseUrl.includes('127.0.0.1')) ? 'Localhost (8000)' : (state.baseUrl.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
 
       // Load initial chat
       if (state.chats.length === 0) {
@@ -1627,7 +1648,10 @@
       fetchAvailableModels();
 
       // Auto-detect active tunnel if available
-      fetch('http://localhost:8000/api/system/status')
+      const statusApi = window.location.protocol.startsWith('http') 
+        ? `${window.location.origin}/api/system/status` 
+        : 'http://localhost:8000/api/system/status';
+      fetch(statusApi)
         .then(r => r.json())
         .then(st => {
           if (st.key_count) {
@@ -1640,6 +1664,7 @@
               localStorage.setItem('kilo_base_url', state.baseUrl);
               elements.footerConnectionLabel.textContent = state.baseUrl;
               elements.settingBaseUrl.value = state.baseUrl;
+              elements.endpointModeLabel.textContent = (st.public_url.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
             }
           }
         })
