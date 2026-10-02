@@ -2260,7 +2260,7 @@
                   <i data-lucide="copy" class="w-3 h-3"></i>
                   <span>Copy</span>
                 </button>
-                <span class="text-[10px] font-mono text-slate-500">${msg.content.length} chars</span>
+                <span class="msg-char-counter text-[10px] font-mono text-slate-500">${(msg.content || "").length} chars</span>
               </div>
             </div>
           </div>
@@ -2430,6 +2430,7 @@
         elements.messagesList.appendChild(msgRow);
         const contentDiv = msgRow.querySelector('.message-content');
         const latencyBadge = msgRow.querySelector('.latency-time-badge');
+        const charCounter = msgRow.querySelector('.msg-char-counter');
 
         const markLatency = () => {
           if (!assistantMsg.latency) {
@@ -2457,6 +2458,7 @@
               renderScheduled = true;
               requestAnimationFrame(() => {
                 contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+                if (charCounter) charCounter.textContent = `${assistantMsg.content.length} chars`;
                 elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
                 renderScheduled = false;
               });
@@ -2505,6 +2507,7 @@
             assistantMsg.content = `⚠️ **Upstream Stalled**: The server for \`${state.selectedModel}\` did not return any tokens before closing the connection.\n\n*If you are using Localtunnel, it may have dropped the socket. Switching to **Cloudflare Tunnel** in Settings provides 100% stable connection.*`;
           }
           contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+          if (charCounter) charCounter.textContent = `${assistantMsg.content.length} chars`;
           elements.chatScrollArea.scrollTop = elements.chatScrollArea.scrollHeight;
           contentDiv.classList.remove('typing-cursor');
         } else {
@@ -2514,6 +2517,7 @@
           const reply = jsonResp.choices?.[0]?.message?.content || jsonResp.choices?.[0]?.text || JSON.stringify(jsonResp);
           assistantMsg.content = reply;
           contentDiv.innerHTML = renderMarkdown(assistantMsg.content);
+          if (charCounter) charCounter.textContent = `${assistantMsg.content.length} chars`;
         }
 
         lucide.createIcons();
