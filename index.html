@@ -507,7 +507,7 @@
           <input id="settingBaseUrl" type="text" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
           <!-- Quick Presets -->
           <div class="flex flex-wrap gap-1.5 pt-1">
-            <button data-url="https://probe-peace-earning-indoor.trycloudflare.com/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 flex items-center gap-1 font-semibold">⚡ Cloudflare (5x Faster)</button>
+            <button data-url="https://bumper-gear-grant-plug.trycloudflare.com/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 flex items-center gap-1 font-semibold">⚡ Cloudflare (5x Faster)</button>
             <button data-url="https://kilo-api-alhussainacademy.loca.lt/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Public Tunnel</button>
             <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Localhost (8000)</button>
             <button id="detectTunnelBtn" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30">Auto-Detect</button>
@@ -1826,13 +1826,18 @@
 ];
 
     // --- Application State ---
-    const DEFAULT_TUNNEL_URL = 'https://probe-peace-earning-indoor.trycloudflare.com/v1';
+    const DEFAULT_TUNNEL_URL = 'https://bumper-gear-grant-plug.trycloudflare.com/v1';
     const isGitHubPages = window.location.hostname.includes('github.io');
     const defaultBase = isGitHubPages
       ? DEFAULT_TUNNEL_URL
       : (window.location.protocol.startsWith('http') ? `${window.location.origin}/v1` : 'http://localhost:8000/v1');
+    let savedBaseUrl = localStorage.getItem('kilo_base_url');
+    if (!savedBaseUrl || savedBaseUrl.includes('probe-peace-earning-indoor')) {
+      savedBaseUrl = defaultBase;
+      localStorage.setItem('kilo_base_url', defaultBase);
+    }
     const state = {
-      baseUrl: localStorage.getItem('kilo_base_url') || defaultBase,
+      baseUrl: savedBaseUrl,
       apiKey: localStorage.getItem('kilo_api_key') || 'dummy-key',
       bypassHeader: localStorage.getItem('kilo_bypass_header') !== 'false',
       temperature: parseFloat(localStorage.getItem('kilo_temp') || '0.7'),
