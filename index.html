@@ -2399,10 +2399,14 @@
       if (state.selectedModel.startsWith('openai/') && finalMaxTokens > 4096) {
         finalMaxTokens = 4096;
       }
+      let finalTemp = state.temperature;
+      if (state.selectedModel.includes('-sol')) {
+        finalTemp = 1.0;
+      }
       const requestBody = {
         model: state.selectedModel,
         messages: messagesPayload,
-        temperature: state.temperature,
+        temperature: finalTemp,
         max_tokens: finalMaxTokens,
         stream: state.streaming
       };
