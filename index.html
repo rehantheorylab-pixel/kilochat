@@ -296,14 +296,18 @@
               <div id="providerFilters" class="flex gap-1 overflow-x-auto pb-1 text-[10px] scrollbar-none">
                 <button data-filter="fast" class="filter-pill active px-2.5 py-1 rounded-full bg-emerald-500 text-white font-semibold flex-shrink-0 flex items-center gap-1 shadow-sm"><i data-lucide="zap" class="w-3 h-3 text-white"></i>⚡ Fast (&lt;2s)</button>
                 <button data-filter="all" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">All (178)</button>
-                <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen</button>
-                <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
-                <button data-filter="anthropic" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Anthropic</button>
+                <button data-filter="media" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">🎨 Media (Video/Img)</button>
                 <button data-filter="openai" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">OpenAI</button>
+                <button data-filter="anthropic" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Anthropic</button>
+                <button data-filter="google" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Google</button>
                 <button data-filter="deepseek" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">DeepSeek</button>
-                <button data-filter="meta" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Meta</button>
+                <button data-filter="bytedance" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">ByteDance</button>
+                <button data-filter="minimax" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">MiniMax</button>
+                <button data-filter="kuaishou" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Kling</button>
+                <button data-filter="alibaba" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Qwen / Wan</button>
                 <button data-filter="moonshot" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Kimi</button>
                 <button data-filter="zhipu" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">GLM</button>
+                <button data-filter="meta" class="filter-pill px-2.5 py-1 rounded-full bg-surface-card text-slate-300 hover:text-white border border-surface-border flex-shrink-0">Meta</button>
               </div>
             </div>
 
@@ -578,35 +582,35 @@
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 131072,
-        "display_name": "Qwen Coder 7B (⚡ Ultra Fast)"
+        "display_name": "Qwen Coder 7B (\u26a1 Ultra Fast)"
     },
     {
         "id": "gemini-flash",
         "object": "model",
         "owned_by": "google",
         "context_window": 1048576,
-        "display_name": "Google Gemini 2.5 Flash (⚡ Ultra Fast)"
+        "display_name": "Google Gemini 2.5 Flash (\u26a1 Ultra Fast)"
     },
     {
         "id": "gemma-3-12b",
         "object": "model",
         "owned_by": "google",
         "context_window": 131072,
-        "display_name": "Gemma 3 12B (⚡ Ultra Fast)"
+        "display_name": "Gemma 3 12B (\u26a1 Ultra Fast)"
     },
     {
         "id": "gemma-3-27b",
         "object": "model",
         "owned_by": "google",
         "context_window": 131072,
-        "display_name": "Gemma 3 27B (⚡ Fast)"
+        "display_name": "Gemma 3 27B (\u26a1 Fast)"
     },
     {
         "id": "qwen3-8b",
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 131072,
-        "display_name": "Qwen3 8B (⚡ Fast)"
+        "display_name": "Qwen3 8B (\u26a1 Fast)"
     },
     {
         "id": "gpt-4o",
@@ -998,828 +1002,828 @@
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen 2.5 72B Instruct [RouterBase]"
+        "display_name": "Qwen2.5 72B Instruct"
     },
     {
         "id": "qwen/qwen3-235b-a22b-instruct-2507",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3 235B A22B Instruct 2507 [RouterBase]"
+        "display_name": "Qwen3 235B A22B Instruct 2507"
     },
     {
         "id": "qwen/qwen3-coder-30b-a3b-instruct",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3 Coder 30B A3B Instruct [RouterBase]"
+        "display_name": "Qwen3 Coder 30B A3B Instruct"
     },
     {
         "id": "qwen/qwen3-coder-480b-a35b-instruct",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3 Coder 480B A35B Instruct [RouterBase]"
+        "display_name": "Qwen3 Coder 480B A35B Instruct"
     },
     {
         "id": "qwen/qwen3-coder-next",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3 Coder Next [RouterBase]"
+        "display_name": "Qwen3 Coder Next"
     },
     {
         "id": "qwen/qwen3-vl-30b-a3b-instruct",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3 Vl 30B A3B Instruct [RouterBase]"
+        "display_name": "Qwen3 VL 30B A3B Instruct"
     },
     {
         "id": "qwen/qwen3.5-122b-a10b",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3.5 122B A10B [RouterBase]"
+        "display_name": "Qwen3.5 122B A10B"
     },
     {
         "id": "qwen/qwen3.5-27b",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3.5 27B [RouterBase]"
+        "display_name": "Qwen3.5 27B"
     },
     {
         "id": "qwen/qwen3.5-35b-a3b",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3.5 35B A3B [RouterBase]"
+        "display_name": "Qwen3.5 35B A3B"
     },
     {
         "id": "qwen/qwen3.5-397b-a17b",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3.5 397B A17B [RouterBase]"
+        "display_name": "Qwen3.5 397B A17B"
     },
     {
         "id": "qwen/qwen3.5-plus",
         "object": "model",
         "owned_by": "qwen",
         "context_window": 128000,
-        "display_name": "Qwen3.5 Plus [RouterBase]"
+        "display_name": "Qwen3.5 Plus"
     },
     {
         "id": "alibaba/wan-2-7-i2v",
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 128000,
-        "display_name": "Wan 2 7 I2V [RouterBase]"
+        "display_name": "Wan 2.7 (Image-to-Video)"
     },
     {
         "id": "alibaba/wan-2-7-r2v",
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 128000,
-        "display_name": "Wan 2 7 R2V [RouterBase]"
+        "display_name": "Wan 2.7 (Reference-to-Video)"
     },
     {
         "id": "alibaba/wan-2-7-t2v",
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 128000,
-        "display_name": "Wan 2 7 T2V [RouterBase]"
+        "display_name": "Wan 2.7 (Text-to-Video)"
     },
     {
         "id": "alibaba/wan-2-7-video-edit",
         "object": "model",
         "owned_by": "alibaba",
         "context_window": 128000,
-        "display_name": "Wan 2 7 Video Edit [RouterBase]"
+        "display_name": "Wan 2.7 (Video Editing)"
     },
     {
         "id": "anthropic/claude-fable-5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Fable 5 [RouterBase]"
+        "display_name": "Claude Fable 5"
     },
     {
         "id": "anthropic/claude-haiku-4.5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Haiku 4.5 [RouterBase]"
+        "display_name": "Claude Haiku 4.5"
     },
     {
         "id": "anthropic/claude-opus-4.5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Opus 4.5 [RouterBase]"
+        "display_name": "Claude Opus 4.5"
     },
     {
         "id": "anthropic/claude-opus-4.6",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Opus 4.6 [RouterBase]"
+        "display_name": "Claude Opus 4.6"
     },
     {
         "id": "anthropic/claude-opus-4.7",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Opus 4.7 [RouterBase]"
+        "display_name": "Claude Opus 4.7"
     },
     {
         "id": "anthropic/claude-opus-4.8",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Opus 4.8 [RouterBase]"
+        "display_name": "Claude Opus 4.8"
     },
     {
         "id": "anthropic/claude-opus-5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Opus 5 [RouterBase]"
+        "display_name": "Claude Opus 5"
     },
     {
         "id": "anthropic/claude-sonnet-4.5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Sonnet 4.5 [RouterBase]"
+        "display_name": "Claude Sonnet 4.5"
     },
     {
         "id": "anthropic/claude-sonnet-4.6",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Sonnet 4.6 [RouterBase]"
+        "display_name": "Claude Sonnet 4.6"
     },
     {
         "id": "anthropic/claude-sonnet-5",
         "object": "model",
         "owned_by": "anthropic",
         "context_window": 128000,
-        "display_name": "Claude Sonnet 5 [RouterBase]"
+        "display_name": "Claude Sonnet 5"
     },
     {
         "id": "bytedance/seedream-3.0-t2i",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedream 3.0 T2I [RouterBase]"
+        "display_name": "ByteDance Seedream 3.0"
     },
     {
         "id": "bytedance/seedream-4.0",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedream 4.0 [RouterBase]"
+        "display_name": "ByteDance Seedream 4.0"
     },
     {
         "id": "bytedance/seedream-4.5",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedream 4.5 [RouterBase]"
+        "display_name": "ByteDance Seedream 4.5"
     },
     {
         "id": "bytedance/seedream-5.0-lite",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedream 5.0 Lite [RouterBase]"
+        "display_name": "ByteDance Seedream 5.0 Lite"
     },
     {
         "id": "bytedance/seedance-2-i2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 I2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.0 (Image-to-Video)"
     },
     {
         "id": "bytedance/seedance-2-t2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 T2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.0 (Text-to-Video)"
     },
     {
         "id": "bytedance/seedance-2-fast-i2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 Fast I2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.0 Fast (Image-to-Video)"
     },
     {
         "id": "bytedance/seedance-2-fast-t2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 Fast T2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.0 Fast (Text-to-Video)"
     },
     {
         "id": "bytedance/seedance-2-5-i2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 5 I2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.5 (Image-to-Video)"
     },
     {
         "id": "bytedance/seedance-2-5-t2v",
         "object": "model",
         "owned_by": "bytedance",
         "context_window": 128000,
-        "display_name": "Seedance 2 5 T2V [RouterBase]"
+        "display_name": "Doubao-Seedance 2.5 (Text-to-Video)"
     },
     {
         "id": "deepseek/deepseek-r1-0528",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek R1 0528 [RouterBase]"
+        "display_name": "DeepSeek R1 (0528)"
     },
     {
         "id": "deepseek/deepseek-r1-distill-llama-70b",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek R1 Distill Llama 70B [RouterBase]"
+        "display_name": "DeepSeek R1 Distill Llama 70B"
     },
     {
         "id": "deepseek/deepseek-r1-turbo",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek R1 Turbo [RouterBase]"
+        "display_name": "DeepSeek R1 Turbo"
     },
     {
         "id": "deepseek/deepseek-v3-0324",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3 0324 [RouterBase]"
+        "display_name": "DeepSeek V3 (0324)"
     },
     {
         "id": "deepseek/deepseek-v3-turbo",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3 Turbo [RouterBase]"
+        "display_name": "DeepSeek V3 Turbo"
     },
     {
         "id": "deepseek/deepseek-v3.1",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3.1 [RouterBase]"
+        "display_name": "DeepSeek V3.1"
     },
     {
         "id": "deepseek/deepseek-v3.1-terminus",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3.1 Terminus [RouterBase]"
+        "display_name": "DeepSeek V3.1 Terminus"
     },
     {
         "id": "deepseek/deepseek-v3.2",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3.2 [RouterBase]"
+        "display_name": "DeepSeek V3.2"
     },
     {
         "id": "deepseek/deepseek-v3.2-exp",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V3.2 Exp [RouterBase]"
+        "display_name": "DeepSeek V3.2 Exp"
     },
     {
         "id": "deepseek/deepseek-v4-flash",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V4 Flash [RouterBase]"
+        "display_name": "DeepSeek V4 Flash"
     },
     {
         "id": "deepseek/deepseek-v4-pro",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V4 Pro [RouterBase]"
+        "display_name": "DeepSeek V4 Pro"
     },
     {
         "id": "deepseek/deepseek-v4-pro-0813",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V4 Pro 0813 [RouterBase]"
+        "display_name": "DeepSeek V4 Pro (0813)"
     },
     {
         "id": "deepseek/deepseek-v4.1-flash",
         "object": "model",
         "owned_by": "deepseek",
         "context_window": 128000,
-        "display_name": "Deepseek V4.1 Flash [RouterBase]"
+        "display_name": "DeepSeek V4.1 Flash"
     },
     {
         "id": "google/gemini-2.5-flash",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 2.5 Flash [RouterBase]"
+        "display_name": "Gemini 2.5 Flash"
     },
     {
         "id": "google/gemini-2.5-flash-lite",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 2.5 Flash Lite [RouterBase]"
+        "display_name": "Gemini 2.5 Flash-Lite"
     },
     {
         "id": "google/gemini-2.5-pro",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 2.5 Pro [RouterBase]"
+        "display_name": "Gemini 2.5 Pro"
     },
     {
         "id": "google/gemini-3-flash-preview",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3 Flash Preview [RouterBase]"
+        "display_name": "Gemini 3 Flash (Preview)"
     },
     {
         "id": "google/gemini-3.1-flash-lite",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3.1 Flash Lite [RouterBase]"
+        "display_name": "Gemini 3.1 Flash-Lite"
     },
     {
         "id": "google/gemini-3.1-pro-preview",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3.1 Pro Preview [RouterBase]"
+        "display_name": "Gemini 3.1 Pro (Preview)"
     },
     {
         "id": "google/gemini-3.5-flash",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3.5 Flash [RouterBase]"
+        "display_name": "Gemini 3.5 Flash"
     },
     {
         "id": "google/gemini-3.6-flash",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3.6 Flash [RouterBase]"
+        "display_name": "Gemini 3.6 Flash"
     },
     {
         "id": "google/gemini-3.8-flash",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3.8 Flash [RouterBase]"
+        "display_name": "Gemini 3.8 Flash"
     },
     {
         "id": "google/gemini-3-1-flash-image-edit",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3 1 Flash Image Edit [RouterBase]"
+        "display_name": "Google Gemini 3.1 Flash Image Edit"
     },
     {
         "id": "google/veo-3-1-i2v-novita",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Veo 3 1 I2V Novita [RouterBase]"
+        "display_name": "Google Veo 3.1 (Image to Video)"
     },
     {
         "id": "google/veo-3-preview-t2v-novita",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Veo 3 Preview T2V Novita [RouterBase]"
+        "display_name": "Google Veo 3.1 (Text to Video)"
     },
     {
         "id": "google/gemini-3-1-flash-image-t2i",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3 1 Flash Image T2I [RouterBase]"
+        "display_name": "Nano Banana 2(Text to Image)"
     },
     {
         "id": "google/gemini-3-pro-image-edit",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3 Pro Image Edit [RouterBase]"
+        "display_name": "Nano Banana Pro(Image Editing)"
     },
     {
         "id": "google/gemini-3-pro-image-t2i",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 3 Pro Image T2I [RouterBase]"
+        "display_name": "Nano Banana Pro(Text to Image)"
     },
     {
         "id": "google/gemini-2-5-flash-image-edit",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 2 5 Flash Image Edit [RouterBase]"
+        "display_name": "Nano Banana(Image Editing)"
     },
     {
         "id": "google/gemini-2-5-flash-image-t2i",
         "object": "model",
         "owned_by": "google",
         "context_window": 128000,
-        "display_name": "Gemini 2 5 Flash Image T2I [RouterBase]"
+        "display_name": "Nano Banana(Text to Image)"
     },
     {
         "id": "kuaishou/kling-v3-4k-i2v",
         "object": "model",
         "owned_by": "kuaishou",
         "context_window": 128000,
-        "display_name": "Kling V3 4K I2V [RouterBase]"
+        "display_name": "Kling v3.0 4K (Image-to-Video)"
     },
     {
         "id": "kuaishou/kling-v3-4k-t2v",
         "object": "model",
         "owned_by": "kuaishou",
         "context_window": 128000,
-        "display_name": "Kling V3 4K T2V [RouterBase]"
+        "display_name": "Kling v3.0 4K (Text-to-Video)"
     },
     {
         "id": "kuaishou/kling-v3-motion-control",
         "object": "model",
         "owned_by": "kuaishou",
         "context_window": 128000,
-        "display_name": "Kling V3 Motion Control [RouterBase]"
+        "display_name": "Kling v3.0 Motion Control"
     },
     {
         "id": "minimax/minimax-h3-i2v",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax H3 I2V [RouterBase]"
+        "display_name": "MiniMax H3(Image-to-Video)"
     },
     {
         "id": "minimax/minimax-h3-r2v",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax H3 R2V [RouterBase]"
+        "display_name": "MiniMax H3(Reference-to-Video)"
     },
     {
         "id": "minimax/minimax-h3-t2v",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax H3 T2V [RouterBase]"
+        "display_name": "MiniMax H3(Text-to-Video)"
     },
     {
         "id": "minimaxai/minimax-m1-80k",
         "object": "model",
-        "owned_by": "minimaxai",
+        "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax M1 80K [RouterBase]"
+        "display_name": "MiniMax M1 80k"
     },
     {
         "id": "minimax/minimax-m2",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax M2 [RouterBase]"
+        "display_name": "MiniMax M2"
     },
     {
         "id": "minimax/minimax-m2.1",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax M2.1 [RouterBase]"
+        "display_name": "MiniMax M2.1"
     },
     {
         "id": "minimax/minimax-m2.5",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax M2.5 [RouterBase]"
+        "display_name": "MiniMax M2.5"
     },
     {
         "id": "minimax/minimax-m2.7",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax M2.7 [RouterBase]"
+        "display_name": "MiniMax M2.7"
     },
     {
         "id": "minimax/minimax-h3-max-t2v",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax H3 Max T2V [RouterBase]"
+        "display_name": "MiniMax-H3-Max"
     },
     {
         "id": "minimax/minimax-h3-max-i2v",
         "object": "model",
         "owned_by": "minimax",
         "context_window": 128000,
-        "display_name": "Minimax H3 Max I2V [RouterBase]"
+        "display_name": "MiniMax-H3-Max (Image-to-Video)"
     },
     {
         "id": "moonshotai/kimi-k2-0905",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K2 0905 [RouterBase]"
+        "display_name": "Kimi K2 0905"
     },
     {
         "id": "moonshotai/kimi-k2-instruct",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K2 Instruct [RouterBase]"
+        "display_name": "Kimi K2 Instruct"
     },
     {
         "id": "moonshotai/kimi-k2-thinking",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K2 Thinking [RouterBase]"
+        "display_name": "Kimi K2 Thinking"
     },
     {
         "id": "moonshotai/kimi-k2.5",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K2.5 [RouterBase]"
+        "display_name": "Kimi K2.5"
     },
     {
         "id": "moonshotai/kimi-k2.6",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K2.6 [RouterBase]"
+        "display_name": "Kimi K2.6"
     },
     {
         "id": "moonshotai/kimi-k3",
         "object": "model",
         "owned_by": "moonshotai",
         "context_window": 128000,
-        "display_name": "Kimi K3 [RouterBase]"
+        "display_name": "Kimi K3"
     },
     {
         "id": "openai/gpt-4.1",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 4.1 [RouterBase]"
+        "display_name": "GPT-4.1"
     },
     {
         "id": "openai/gpt-4.1-nano",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 4.1 Nano [RouterBase]"
+        "display_name": "GPT-4.1 nano"
     },
     {
         "id": "openai/gpt-4o",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 4O [RouterBase]"
+        "display_name": "GPT-4o"
     },
     {
         "id": "openai/gpt-4o-mini",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 4O Mini [RouterBase]"
+        "display_name": "GPT-4o mini"
     },
     {
         "id": "openai/gpt-5",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5 [RouterBase]"
+        "display_name": "GPT-5"
     },
     {
         "id": "openai/gpt-5-nano",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5 Nano [RouterBase]"
+        "display_name": "GPT-5 nano"
     },
     {
         "id": "openai/gpt-5.4",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.4 [RouterBase]"
+        "display_name": "GPT-5.4"
     },
     {
         "id": "openai/gpt-5.4-mini",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.4 Mini [RouterBase]"
+        "display_name": "GPT-5.4 mini"
     },
     {
         "id": "openai/gpt-5.5",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.5 [RouterBase]"
+        "display_name": "GPT-5.5"
     },
     {
         "id": "openai/gpt-5.6-luna",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.6 Luna [RouterBase]"
+        "display_name": "GPT-5.6-Luna"
     },
     {
         "id": "openai/gpt-5.6-sol",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.6 Sol [RouterBase]"
+        "display_name": "GPT-5.6-Sol"
     },
     {
         "id": "openai/gpt-5.6-terra",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt 5.6 Terra [RouterBase]"
+        "display_name": "GPT-5.6-Terra"
     },
     {
         "id": "openai/gpt-image-2.5-flare-edit",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2.5 Flare Edit [RouterBase]"
+        "display_name": "OpenAI GPT Image 2.5 Flare (Image Editing)"
     },
     {
         "id": "openai/gpt-image-2.5-flare-t2i",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2.5 Flare T2I [RouterBase]"
+        "display_name": "OpenAI GPT Image 2.5 Flare (Text to Image)"
     },
     {
         "id": "openai/gpt-image-2.5-sunburst-edit",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2.5 Sunburst Edit [RouterBase]"
+        "display_name": "OpenAI GPT Image 2.5 Sunburst (Image Editing)"
     },
     {
         "id": "openai/gpt-image-2.5-sunburst-t2i",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2.5 Sunburst T2I [RouterBase]"
+        "display_name": "OpenAI GPT Image 2.5 Sunburst (Text to Image)"
     },
     {
         "id": "openai/gpt-image-2-edit",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2 Edit [RouterBase]"
+        "display_name": "OpenAI GPT Image 2(Image Editing)"
     },
     {
         "id": "openai/gpt-image-2-t2i",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Gpt Image 2 T2I [RouterBase]"
+        "display_name": "OpenAI GPT Image 2(Text to Image)"
     },
     {
         "id": "openai/o3",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "O3 [RouterBase]"
+        "display_name": "OpenAI o3"
     },
     {
         "id": "openai/o4-mini",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "O4 Mini [RouterBase]"
+        "display_name": "OpenAI o4-mini"
     },
     {
         "id": "openai/sora-2-i2v",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Sora 2 I2V [RouterBase]"
+        "display_name": "OpenAI Sora 2 (Image-to-Video)"
     },
     {
         "id": "openai/sora-2-pro-i2v",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Sora 2 Pro I2V [RouterBase]"
+        "display_name": "OpenAI Sora 2 Pro (Image-to-Video)"
     },
     {
         "id": "openai/sora-2-pro-t2v",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Sora 2 Pro T2V [RouterBase]"
+        "display_name": "OpenAI Sora 2 Pro(Text to Video)"
     },
     {
         "id": "openai/sora-2-t2v",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Sora 2 T2V [RouterBase]"
+        "display_name": "OpenAI Sora 2(Text to Video)"
     },
     {
         "id": "openai/text-embedding-3-large",
         "object": "model",
         "owned_by": "openai",
         "context_window": 128000,
-        "display_name": "Text Embedding 3 Large [RouterBase]"
+        "display_name": "Text Embedding 3 Large"
     },
     {
         "id": "zai/glm-4.5-air",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 4.5 Air [RouterBase]"
+        "display_name": "GLM-4.5-Air"
     },
     {
         "id": "zai/glm-4.5v",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 4.5V [RouterBase]"
+        "display_name": "GLM-4.5V"
     },
     {
         "id": "zai/glm-4.6",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 4.6 [RouterBase]"
+        "display_name": "GLM-4.6"
     },
     {
         "id": "zai/glm-4.6v",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 4.6V [RouterBase]"
+        "display_name": "GLM-4.6V"
     },
     {
         "id": "zai/glm-4.7",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 4.7 [RouterBase]"
+        "display_name": "GLM-4.7"
     },
     {
         "id": "zai/glm-5",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 5 [RouterBase]"
+        "display_name": "GLM-5"
     },
     {
         "id": "zai/glm-5.1",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 5.1 [RouterBase]"
+        "display_name": "GLM-5.1"
     },
     {
         "id": "zai/glm-5.2",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 5.2 [RouterBase]"
+        "display_name": "GLM-5.2"
     },
     {
         "id": "zai/glm-5.3-flash",
         "object": "model",
         "owned_by": "zai",
         "context_window": 128000,
-        "display_name": "Glm 5.3 Flash [RouterBase]"
+        "display_name": "GLM-5.3-Flash"
     }
-];
+]];
 
     // --- Application State ---
     const DEFAULT_TUNNEL_URL = 'https://probe-peace-earning-indoor.trycloudflare.com/v1';
@@ -1930,26 +1934,35 @@
       if (id.includes('claude') || owner.includes('anthropic')) {
         return { name: 'Anthropic', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.15)' };
       }
-      if (id.includes('gpt') || id.includes('o1') || id.includes('o3') || owner.includes('openai')) {
+      if (id.includes('gpt') || id.includes('o1') || id.includes('o3') || id.includes('sora') || owner.includes('openai')) {
         return { name: 'OpenAI', color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)' };
       }
-      if (id.includes('gemini') || id.includes('gemma') || owner.includes('google')) {
+      if (id.includes('gemini') || id.includes('gemma') || id.includes('veo') || owner.includes('google')) {
         return { name: 'Google', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.15)' };
       }
       if (id.includes('deepseek')) {
         return { name: 'DeepSeek', color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.15)' };
       }
-      if (id.includes('llama') || owner.includes('meta')) {
-        return { name: 'Meta', color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)' };
+      if (id.includes('seedance') || id.includes('seedream') || id.includes('doubao') || owner.includes('bytedance')) {
+        return { name: 'ByteDance', color: '#0ea5e9', bg: 'rgba(14, 165, 233, 0.15)' };
       }
-      if (id.includes('qwen') || owner.includes('alibaba')) {
-        return { name: 'Qwen', color: '#ec4899', bg: 'rgba(236, 72, 153, 0.15)' };
+      if (id.includes('minimax') || owner.includes('minimax')) {
+        return { name: 'MiniMax', color: '#14b8a6', bg: 'rgba(20, 184, 166, 0.15)' };
+      }
+      if (id.includes('kling') || owner.includes('kuaishou')) {
+        return { name: 'Kling', color: '#f43f5e', bg: 'rgba(244, 63, 94, 0.15)' };
+      }
+      if (id.includes('wan') || id.includes('qwen') || owner.includes('alibaba')) {
+        return { name: id.includes('wan') ? 'Wan' : 'Qwen', color: '#ec4899', bg: 'rgba(236, 72, 153, 0.15)' };
       }
       if (id.includes('kimi') || owner.includes('moonshot')) {
         return { name: 'Kimi', color: '#a855f7', bg: 'rgba(168, 85, 247, 0.15)' };
       }
-      if (id.includes('glm') || owner.includes('zhipu') || owner.includes('cerebras')) {
+      if (id.includes('glm') || owner.includes('zai') || owner.includes('zhipu') || owner.includes('cerebras')) {
         return { name: 'GLM', color: '#6366f1', bg: 'rgba(99, 102, 241, 0.15)' };
+      }
+      if (id.includes('llama') || owner.includes('meta')) {
+        return { name: 'Meta', color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.15)' };
       }
       if (id.includes('mistral') || owner.includes('mistral')) {
         return { name: 'Mistral', color: '#f97316', bg: 'rgba(249, 115, 22, 0.15)' };
@@ -2043,17 +2056,24 @@
         if (providerFilter === 'all') return true;
         const FAST_MODELS = ['qwen-coder-7b', 'gemini-flash', 'gemma-3-12b', 'gemma-3-27b', 'qwen3-8b', 'deepseek-chat', 'deepseek-v4-pro'];
         if (providerFilter === 'fast') return FAST_MODELS.includes(m.id);
+        if (providerFilter === 'media') {
+          const isMedia = id.includes('image') || id.includes('video') || id.includes('i2v') || id.includes('t2v') || id.includes('r2v') || id.includes('t2i') || id.includes('edit') || id.includes('sora') || id.includes('veo') || id.includes('kling') || id.includes('wan-') || id.includes('seedance') || id.includes('seedream') || (m.display_name && (m.display_name.includes('Image') || m.display_name.includes('Video')));
+          return isMedia;
+        }
 
         const owner = (m.owned_by || '').toLowerCase();
-        const id = m.id.toLowerCase();
-        if (providerFilter === 'anthropic') return id.includes('claude') || owner.includes('anthropic');
-        if (providerFilter === 'openai') return id.includes('gpt') || id.includes('o1') || id.includes('o3') || owner.includes('openai');
-        if (providerFilter === 'deepseek') return id.includes('deepseek') || owner.includes('deepseek');
-        if (providerFilter === 'google') return id.includes('gemini') || id.includes('gemma') || owner.includes('google');
-        if (providerFilter === 'meta') return id.includes('llama') || owner.includes('meta');
-        if (providerFilter === 'alibaba') return id.includes('qwen') || owner.includes('alibaba');
-        if (providerFilter === 'moonshot') return id.includes('kimi') || owner.includes('moonshot');
-        if (providerFilter === 'zhipu') return id.includes('glm') || owner.includes('zhipu') || owner.includes('cerebras');
+        const id_low = m.id.toLowerCase();
+        if (providerFilter === 'anthropic') return id_low.includes('claude') || owner.includes('anthropic');
+        if (providerFilter === 'openai') return id_low.includes('gpt') || id_low.includes('o1') || id_low.includes('o3') || id_low.includes('sora') || owner.includes('openai');
+        if (providerFilter === 'deepseek') return id_low.includes('deepseek') || owner.includes('deepseek');
+        if (providerFilter === 'google') return id_low.includes('gemini') || id_low.includes('gemma') || id_low.includes('veo') || owner.includes('google');
+        if (providerFilter === 'bytedance') return id_low.includes('seedance') || id_low.includes('seedream') || id_low.includes('doubao') || owner.includes('bytedance');
+        if (providerFilter === 'minimax') return id_low.includes('minimax') || owner.includes('minimax');
+        if (providerFilter === 'kuaishou') return id_low.includes('kling') || owner.includes('kuaishou');
+        if (providerFilter === 'alibaba') return id_low.includes('qwen') || id_low.includes('wan') || owner.includes('alibaba');
+        if (providerFilter === 'meta') return id_low.includes('llama') || owner.includes('meta');
+        if (providerFilter === 'moonshot') return id_low.includes('kimi') || owner.includes('moonshot');
+        if (providerFilter === 'zhipu') return id_low.includes('glm') || owner.includes('zai') || owner.includes('zhipu') || owner.includes('cerebras');
         return owner.includes(providerFilter);
       });
 
@@ -2071,7 +2091,17 @@
         
         let speedBadge = '';
         const SLOW_HEAVY_MODELS = ['qwen3-5-72b-instruct', 'qwen3.5-72b-instruct', 'qwen3-5-397b', 'deepseek-v3', 'deepseek-r1', 'llama-3.3-70b', 'llama-3.2-90b-vision', 'claude-opus-4', 'claude-opus-4-5'];
-        if (FAST_MODELS.includes(m.id)) {
+        const isVideo = m.id.includes('video') || m.id.includes('i2v') || m.id.includes('t2v') || m.id.includes('r2v') || (m.display_name && m.display_name.includes('Video'));
+        const isImage = m.id.includes('image') || m.id.includes('t2i') || m.id.includes('edit') || (m.display_name && m.display_name.includes('Image'));
+        const isThinking = m.id.includes('r1') || m.id.includes('reasoner') || m.id.includes('thinking') || m.id.includes('o3') || m.id.includes('o4');
+
+        if (isVideo) {
+          speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-0.5 font-bold">🎬 Video</span>`;
+        } else if (isImage) {
+          speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center gap-0.5 font-bold">🎨 Image</span>`;
+        } else if (isThinking) {
+          speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 flex items-center gap-0.5 font-bold">🧠 Reasoning</span>`;
+        } else if (FAST_MODELS.includes(m.id)) {
           speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-0.5 font-bold"><i data-lucide="zap" class="w-2.5 h-2.5 text-emerald-400"></i>&lt;2s</span>`;
         } else if (SLOW_HEAVY_MODELS.includes(m.id)) {
           speedBadge = `<span class="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-0.5">Heavy (>8s)</span>`;
