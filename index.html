@@ -1832,7 +1832,7 @@
       ? DEFAULT_TUNNEL_URL
       : (window.location.protocol.startsWith('http') ? `${window.location.origin}/v1` : 'http://localhost:8000/v1');
     let savedBaseUrl = localStorage.getItem('kilo_base_url');
-    if (!savedBaseUrl || savedBaseUrl.includes('probe-peace-earning-indoor')) {
+    if (!savedBaseUrl || savedBaseUrl.includes('probe-peace-earning-indoor') || (isGitHubPages && savedBaseUrl.includes('localhost'))) {
       savedBaseUrl = defaultBase;
       localStorage.setItem('kilo_base_url', defaultBase);
     }
@@ -2532,9 +2532,14 @@
           console.log('Stream stopped by user.');
         } else {
           console.error('Chat error:', err);
+          const errorDetails = err && err.message ? err.message : (typeof err === 'object' ? JSON.stringify(err) : String(err));
+          let advice = `*Check that your gateway is online and that your Base URL is pointing to your active tunnel (${state.baseUrl}).*`;
+          if (window.location.protocol === 'https:' && state.baseUrl.startsWith('http://')) {
+            advice = `⚠️ **Browser Mixed-Content Policy**: Your browser blocked this request because an HTTPS website (GitHub Pages) cannot connect to unencrypted \`${state.baseUrl}\`.\n\n👉 **Fix**: In the top header bar or in Settings, select **⚡ Cloudflare Tunnel** (\`${DEFAULT_TUNNEL_URL}\`).`;
+          }
           currentChat.messages.push({
             role: 'assistant',
-            content: `⚠️ **Connection Error**: ${err.message}\n\n*Check that your gateway is online and that your Base URL is pointing to your active tunnel (${state.baseUrl}). If Localtunnel dropped, switch to the Cloudflare Tunnel in Settings.*`,
+            content: `⚠️ **Connection Error**: ${errorDetails}\n\n${advice}`,
             model: state.selectedModel,
             time: formatTime(new Date().toISOString())
           });
@@ -2569,12 +2574,24 @@
         if (st.public_url) activePublic = st.public_url;
       } catch (e) {}
 
-      if (state.baseUrl.includes('localhost') || state.baseUrl.includes('127.0.0.1')) {
-        state.baseUrl = activePublic ? `${activePublic}/v1` : DEFAULT_TUNNEL_URL;
-        elements.endpointModeLabel.textContent = (state.baseUrl.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
+      if (isGitHubPages) {
+        const cfUrl = activePublic && activePublic.includes('cloudflare') ? `${activePublic}/v1` : DEFAULT_TUNNEL_URL;
+        const ltUrl = 'https://kilo-api-alhussainacademy.loca.lt/v1';
+        if (state.baseUrl === cfUrl) {
+          state.baseUrl = ltUrl;
+          elements.endpointModeLabel.textContent = 'Public Tunnel';
+        } else {
+          state.baseUrl = cfUrl;
+          elements.endpointModeLabel.textContent = 'Cloudflare Tunnel';
+        }
       } else {
-        state.baseUrl = 'http://localhost:8000/v1';
-        elements.endpointModeLabel.textContent = 'Localhost (8000)';
+        if (state.baseUrl.includes('localhost') || state.baseUrl.includes('127.0.0.1')) {
+          state.baseUrl = activePublic ? `${activePublic}/v1` : DEFAULT_TUNNEL_URL;
+          elements.endpointModeLabel.textContent = (state.baseUrl.includes('cloudflare') ? 'Cloudflare Tunnel' : 'Public Tunnel');
+        } else {
+          state.baseUrl = 'http://localhost:8000/v1';
+          elements.endpointModeLabel.textContent = 'Localhost (8000)';
+        }
       }
       localStorage.setItem('kilo_base_url', state.baseUrl);
       elements.settingBaseUrl.value = state.baseUrl;
@@ -2739,7 +2756,14 @@
       elements.settingMaxTokens.oninput = (e) => elements.maxTokensValueLabel.textContent = e.target.value;
 
       document.querySelectorAll('.preset-url-btn').forEach(btn => {
-        btn.onclick = () => elements.settingBaseUrl.value = btn.dataset.url;
+        btn.onclick = () => {
+          const target = btn.dataset.url;
+          if (isGitHubPages && target.startsWith('http://localhost')) {
+            alert('Notice: Modern browsers block unencrypted http://localhost requests from HTTPS websites (Mixed Content). On GitHub Pages, use the Cloudflare Tunnel. If you want to use Localhost, open http://localhost:8000/app in your browser.');
+            return;
+          }
+          elements.settingBaseUrl.value = target;
+        };
       });
 
       elements.detectTunnelBtn.onclick = detectActiveTunnel;
