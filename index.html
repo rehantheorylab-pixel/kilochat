@@ -2395,11 +2395,15 @@
         messagesPayload.push({ role: m.role, content: m.content });
       });
 
+      let finalMaxTokens = state.maxTokens;
+      if (state.selectedModel.startsWith('openai/') && finalMaxTokens > 4096) {
+        finalMaxTokens = 4096;
+      }
       const requestBody = {
         model: state.selectedModel,
         messages: messagesPayload,
         temperature: state.temperature,
-        max_tokens: state.maxTokens,
+        max_tokens: finalMaxTokens,
         stream: state.streaming
       };
 
