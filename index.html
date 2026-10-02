@@ -2417,7 +2417,11 @@
 
         if (!res.ok) {
           const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-          throw new Error(errData.detail || errData.error || `Server responded with ${res.status}`);
+          let errStr = errData.detail || errData.error || `Server responded with ${res.status}`;
+          if (typeof errStr === 'object') {
+            errStr = errStr.message || JSON.stringify(errStr);
+          }
+          throw new Error(errStr);
         }
 
         elements.loadingBubble.classList.add('hidden');
