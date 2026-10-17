@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="190" viewBox="0 0 1000 190" role="img" aria-label="KILOCHAT — OPENAI-COMPATIBLE CHAT CLIENT">
+  <style>
+    .nm  { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: 5px; fill: #e6edf3; }
+    .sb  { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 3.4px; fill: #8b949e; }
+    .slug{ font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 11px; letter-spacing: .3px; fill: #484f58; }
+    @keyframes sweep   { from { transform: translateX(-520px); } to { transform: translateX(1080px); } }
+    @keyframes breathe { 0%, 100% { opacity: .12; } 50% { opacity: .34; } }
+    @keyframes glow    { 0%, 100% { opacity: .30; } 50% { opacity: .70; } }
+    .grid  { animation: breathe 5s ease-in-out infinite; }
+    .shine { animation: sweep 6s linear infinite; }
+    .orb   { animation: glow 5s ease-in-out infinite; }
+  </style>
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#a371f7"/>
+      <stop offset="100%" stop-color="#db61a2"/>
+    </linearGradient>
+    <linearGradient id="ah" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#a371f7" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#db61a2" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="sh" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="h" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#a371f7" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#a371f7" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="d" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1.4" cy="1.4" r="1" fill="#1c2128"/>
+    </pattern>
+    <clipPath id="f"><rect x="0" y="0" width="1000" height="190" rx="16"/></clipPath>
+  </defs>
+  <g clip-path="url(#f)">
+    <rect width="1000" height="190" fill="#0d1117"/>
+    <rect width="1000" height="190" fill="url(#d)" class="grid"/>
+    <circle cx="900" cy="140" r="150" fill="url(#h)" class="orb"/>
+    <rect x="0" y="0" width="4" height="190" fill="url(#a)"/>
+    <rect x="0" y="0" width="1000" height="2" fill="url(#ah)"/>
+    <text x="64"  y="76"  class="nm">KILOCHAT</text>
+    <text x="66"  y="102" class="sb">OPENAI-COMPATIBLE CHAT CLIENT</text>
+    <text x="936" y="76"  text-anchor="end" class="slug">rehantheorylab-pixel</text>
+    <text x="936" y="94"  text-anchor="end" class="slug">/kilochat</text>
+    <rect x="64" y="130" width="99" height="26" rx="6" fill="#161b22" stroke="#21262d"/>
+    <text x="114" y="147" text-anchor="middle" font-family="'SFMono-Regular',Consolas,monospace" font-size="11" fill="#9ba3ae">single file</text>
+    <rect x="173" y="130" width="85" height="26" rx="6" fill="#161b22" stroke="#21262d"/>
+    <text x="215" y="147" text-anchor="middle" font-family="'SFMono-Regular',Consolas,monospace" font-size="11" fill="#9ba3ae">streaming</text>
+    <rect x="268" y="130" width="79" height="26" rx="6" fill="#161b22" stroke="#21262d"/>
+    <text x="308" y="147" text-anchor="middle" font-family="'SFMono-Regular',Consolas,monospace" font-size="11" fill="#9ba3ae">no build</text>
+    <rect x="-520" y="0" width="520" height="190" fill="url(#sh)" class="shine"/>
+    <rect x="0.5" y="0.5" width="999" height="189" rx="16" fill="none" stroke="#30363d"/>
+  </g>
+</svg>

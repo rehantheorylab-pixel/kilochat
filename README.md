@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/header.svg" alt="kilochat" width="100%">
+</div>
+
 # KiloChat
 
 A single-file web client for an OpenAI-compatible gateway. No build step, no framework, no
