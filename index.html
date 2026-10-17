@@ -238,7 +238,7 @@
           <span id="keyCountBadge" class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">AINative + RouterBase Active</span>
         </div>
         <div class="flex items-center justify-between text-[11px] text-slate-400">
-          <span class="truncate max-w-[150px]" id="tunnelUrlLabel">loca.lt tunnel</span>
+          <span class="truncate max-w-[150px]" id="tunnelUrlLabel">local gateway</span>
           <span id="latencyBadge" class="font-mono text-indigo-400">Live</span>
         </div>
       </div>
@@ -507,8 +507,8 @@
           <input id="settingBaseUrl" type="text" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
           <!-- Quick Presets -->
           <div class="flex flex-wrap gap-1.5 pt-1">
-            <button data-url="https://bumper-gear-grant-plug.trycloudflare.com/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 flex items-center gap-1 font-semibold">⚡ Cloudflare (5x Faster)</button>
-            <button data-url="https://kilo-api-alhussainacademy.loca.lt/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Public Tunnel</button>
+            <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 flex items-center gap-1 font-semibold">⚡ Cloudflare (5x Faster)</button>
+            <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Public Tunnel</button>
             <button data-url="http://localhost:8000/v1" class="preset-url-btn text-[10px] px-2 py-0.5 rounded-lg bg-surface-card hover:bg-surface-cardAlt border border-surface-border text-slate-300">Localhost (8000)</button>
             <button id="detectTunnelBtn" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/30">Auto-Detect</button>
           </div>
@@ -518,9 +518,9 @@
         <div class="space-y-1.5">
           <label class="text-xs font-semibold text-slate-200 flex items-center justify-between">
             <span>Authorization Bearer Token</span>
-            <span class="text-[10px] text-slate-400">Any dummy key is accepted</span>
+            <span class="text-[10px] text-slate-400">Enter the token your gateway requires</span>
           </label>
-          <input id="settingApiKey" type="text" value="dummy-key" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
+          <input id="settingApiKey" type="text" value="" class="w-full bg-surface-card border border-surface-border rounded-xl px-3 py-2 text-xs font-mono text-slate-100 focus:outline-none focus:border-brand-500">
         </div>
 
         <!-- Localtunnel Bypass Header Switch -->
@@ -1826,7 +1826,7 @@
 ];
 
     // --- Application State ---
-    const DEFAULT_TUNNEL_URL = 'https://bumper-gear-grant-plug.trycloudflare.com/v1';
+    const DEFAULT_TUNNEL_URL = 'http://localhost:8000/v1';
     const isGitHubPages = window.location.hostname.includes('github.io');
     const defaultBase = isGitHubPages
       ? DEFAULT_TUNNEL_URL
@@ -1838,7 +1838,7 @@
     }
     const state = {
       baseUrl: savedBaseUrl,
-      apiKey: localStorage.getItem('kilo_api_key') || 'dummy-key',
+      apiKey: localStorage.getItem('kilo_api_key') || '',
       bypassHeader: localStorage.getItem('kilo_bypass_header') !== 'false',
       temperature: parseFloat(localStorage.getItem('kilo_temp') || '0.7'),
       maxTokens: parseInt(localStorage.getItem('kilo_max_tokens') || '4096'),
@@ -2588,7 +2588,7 @@
 
       if (isGitHubPages) {
         const cfUrl = activePublic && activePublic.includes('cloudflare') ? `${activePublic}/v1` : DEFAULT_TUNNEL_URL;
-        const ltUrl = 'https://kilo-api-alhussainacademy.loca.lt/v1';
+        const ltUrl = 'http://localhost:8000/v1';
         if (state.baseUrl === cfUrl) {
           state.baseUrl = ltUrl;
           elements.endpointModeLabel.textContent = 'Public Tunnel';
